@@ -1,4 +1,4 @@
-const API = "http://192.168.15.7:3000";
+const API = "https://vincent-criatorio.onrender.com";
 
 let coelhos = [];
 let cruzamentos = [];
