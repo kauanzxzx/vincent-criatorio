@@ -370,9 +370,9 @@ function atualizarTabela(lista = coelhos){
             <td data-label="Foto">
 
                 <img
-                src="${coelho.foto || 'img/sem-foto.png'}"
+                src="${coelho.foto || 'favicon.ico'}"
                 class="fotoTabela"
-                onclick="abrirFoto('${coelho.foto || 'img/sem-foto.png'}')">
+                onclick="abrirFoto('${coelho.foto || 'favicon.ico'}')">
 
             </td>
 
