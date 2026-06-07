@@ -12,18 +12,18 @@ const db = require("./db");
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-
-app.use(helmet());
-app.use(compression());
 
 app.use(
-    express.static(
-        path.join(
-            __dirname,
-            "../frontend"
-        )
-    )
+    express.json({
+        limit:"25mb"
+    })
+);
+
+app.use(
+    express.urlencoded({
+        limit:"25mb",
+        extended:true
+    })
 );
 
 app.get("/", (req,res)=>{

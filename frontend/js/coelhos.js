@@ -187,13 +187,94 @@ function converterImagemBase64(arquivo){
             return;
         }
 
-        const leitor = new FileReader();
+        const leitor =
+        new FileReader();
 
-        leitor.onload = e =>
-        resolve(e.target.result);
+        leitor.onload = evento => {
 
-        leitor.readAsDataURL(arquivo);
+            const img =
+            new Image();
+
+            img.onload = () => {
+
+                const canvas =
+                document.createElement("canvas");
+
+                const tamanhoMaximo =
+                600;
+
+                let largura =
+                img.width;
+
+                let altura =
+                img.height;
+
+                if(largura > altura){
+
+                    if(largura > tamanhoMaximo){
+
+                        altura *=
+                        tamanhoMaximo / largura;
+
+                        largura =
+                        tamanhoMaximo;
+
+                    }
+
+                }else{
+
+                    if(altura > tamanhoMaximo){
+
+                        largura *=
+                        tamanhoMaximo / altura;
+
+                        altura =
+                        tamanhoMaximo;
+
+                    }
+
+                }
+
+                canvas.width =
+                largura;
+
+                canvas.height =
+                altura;
+
+                const ctx =
+                canvas.getContext("2d");
+
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    largura,
+                    altura
+                );
+
+                const imagemReduzida =
+                canvas.toDataURL(
+                    "image/jpeg",
+                    0.65
+                );
+
+                resolve(
+                    imagemReduzida
+                );
+
+            };
+
+            img.src =
+            evento.target.result;
+
+        };
+
+        leitor.readAsDataURL(
+            arquivo
+        );
+
     });
+
 }
 
 function formatarDataInput(data){
