@@ -11,18 +11,27 @@ let indiceEdicao = null;
 
 function gerarCodigo(){
 
-    let ultimoNumero =
-    localStorage.getItem("ultimoCodigoCoelho") || 0;
+    let maior = 0;
 
-    ultimoNumero++;
+    coelhos.forEach(c => {
 
-    localStorage.setItem(
-        "ultimoCodigoCoelho",
-        ultimoNumero
-    );
+        const numero =
+        Number(
+            String(c.id)
+            .replace("VD","")
+        );
+
+        if(numero > maior){
+
+            maior = numero;
+
+        }
+
+    });
 
     return "VD" +
-    String(ultimoNumero).padStart(3,"0");
+    String(maior + 1)
+    .padStart(3,"0");
 }
 
 async function carregarCoelhos(){
