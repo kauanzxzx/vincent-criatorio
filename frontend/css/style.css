@@ -702,3 +702,26 @@ td[data-label="Ações"]::before{
     }
 
 }
+
+.footer-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.footer-logo img{
+
+    width:32px;
+    height:32px;
+
+    filter:
+    brightness(0)
+    invert(1);
+
+    opacity:.9;
+
+}
