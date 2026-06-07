@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cruzamentos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cruzamentos.css">
+
+</head>
+
+<body>
+
+    <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+<div class="sidebar">
+
+    <h2>Vincent Criatório</h2>
+
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="coelhos.html">Coelhos</a></li>
+        <li><a href="cruzamentos.html">Cruzamentos</a></li>
+        <li><a href="ninhadas.html">Ninhadas</a></li>
+        <li><a href="pesagens.html">Pesagens</a></li>  
+        <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
+        <li><a href="alertas.html">Alertas</a></li>
+        <li><a href="financeiro.html">Financeiro</a></li>
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <h1>Controle de Cruzamentos</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Cruzamentos</h3>
+            <span id="totalCruzamentos">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Prenhas</h3>
+            <span id="totalPrenhas">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Partos Esta Semana</h3>
+            <span id="partosSemana">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Partos Este Mês</h3>
+            <span id="partosMes">0</span>
+        </div>
+
+    </div>
+
+    <div class="formulario">
+
+        <select id="matriz"></select>
+
+        <select id="reprodutor"></select>
+
+        <input type="date" id="dataCruzamento">
+
+        <button onclick="salvarCruzamento()">
+            Salvar Cruzamento
+        </button>
+
+    </div>
+
+    <div class="tabela-container">
+    <table>
+
+        <thead>
+            <tr>
+                <th>Matriz</th>
+                <th>Reprodutor</th>
+                <th>Cruzamento</th>
+                <th>Gestação</th>
+                <th>Parto Previsto</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabelaCruzamentos">
+
+        </tbody>
+
+    </table></div>
+
+</div>
+
+<script src="js/cruzamentos.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>

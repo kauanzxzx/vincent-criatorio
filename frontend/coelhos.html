@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coelhos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/coelhos.css">
+
+</head>
+
+<body>
+
+    <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+    <div class="sidebar">
+
+        <h2>Vincent Criatório</h2>
+
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="coelhos.html">Coelhos</a></li>
+            <li><a href="cruzamentos.html">Cruzamentos</a></li>
+            <li><a href="ninhadas.html">Ninhadas</a></li>
+            <li><a href="pesagens.html">Pesagens</a></li> 
+            <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
+            <li><a href="pedigree.html">Pedigree</a></li>
+            <li><a href="alertas.html">Alertas</a></li>
+            <li><a href="financeiro.html">Financeiro</a></li>
+        </ul>
+
+    </div>
+
+    <div class="content">
+
+        <h1>Cadastro de Coelhos</h1>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total</h3>
+                <span id="totalCoelhos">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Machos</h3>
+                <span id="totalMachos">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Fêmeas</h3>
+                <span id="totalFemeas">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Filhotes</h3>
+                <span id="totalFilhotes">0</span>
+            </div>
+
+        </div>
+
+        <div class="formulario">
+
+            <input type="text" id="nome" placeholder="Nome">
+
+            <select id="sexo">
+                <option value="">Sexo</option>
+                <option>Macho</option>
+                <option>Fêmea</option>
+            </select>
+
+            <select id="raca" placeholder="Raça">
+                <option value="">Raça</option>
+                <option>Netherland</option>
+                <option>Mini Lop</option>
+                <option>Lion Head</option>
+                <option>Teddy Dwerg</option>
+            </select>
+
+            <input type="text" id="pelagem" placeholder="Pelagem">
+
+            <select id="padrao" placeholder="Padrão">
+                <option value="">Padrão</option>
+                <option>Show</option>
+                <option>Pet</option>
+                <option>Meio Termo</option>
+            </select>
+            
+
+            <input type="date" id="nascimento">
+
+            <select id="status">
+                <option>Ativo</option>
+                <option>Vendido</option>
+                <option>Óbito</option>
+            </select>
+
+            <div class="form-group">
+                <textarea
+                    id="observacoes"
+                    placeholder="Observações do animal">
+                </textarea>
+            </div>
+
+            <div class="form-group">
+                <input
+                type="file"
+                id="foto"
+                accept="image/*">
+            </div>
+
+                <button onclick="salvarCoelho()">
+                         Salvar
+                </button>
+
+        </div>
+
+        <div class="filtros">
+
+            <input
+                type="text"
+                id="busca"
+                placeholder="Pesquisar nome..."
+                onkeyup="filtrar()">
+
+            <select id="filtroSexo" onchange="filtrar()">
+                <option value="">Todos</option>
+                <option value="Macho">Macho</option>
+                <option value="Fêmea">Fêmea</option>
+            </select>
+
+        </div>
+
+        <div class="tabela-container">
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Foto</th>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Sexo</th>
+                    <th>Raça</th>
+                    <th>Pelagem</th>
+                    <th>Peso</th>
+                    <th>Observações</th>
+                    <th>Idade</th>
+                    <th>Status</th>
+                    <th>Ação</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="tabelaCoelhos">
+
+            </tbody>
+
+        </table></div>
+
+    </div>
+
+    <div
+    id="modalHistorico"
+    class="modal">
+
+    <div class="modal-content">
+
+        <span
+            class="fechar"
+            onclick="fecharHistorico()">
+
+            &times;
+
+        </span>
+
+        <h2 id="tituloHistorico">
+
+        </h2>
+
+        <div id="listaHistorico">
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalFoto" class="modal">
+
+    <div class="modal-foto-content">
+
+        <span
+            class="fechar"
+            onclick="fecharFoto()">
+
+            &times;
+
+        </span>
+
+        <img id="fotoAmpliada">
+
+    </div>
+
+</div>
+
+    <script src="js/coelhos.js"></script>
+    <script src="js/menu.js"></script>
+
+</body>
+
+</html>

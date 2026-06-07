@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vincent Criatório</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+<div class="sidebar">
+
+    <h2>Vincent Criatório</h2>
+
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="coelhos.html">Coelhos</a></li>
+        <li><a href="cruzamentos.html">Cruzamentos</a></li>
+        <li><a href="ninhadas.html">Ninhadas</a></li>
+        <li><a href="pesagens.html">Pesagens</a></li>
+        <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
+        <li><a href="alertas.html">Alertas</a></li>
+        <li><a href="financeiro.html">Financeiro</a></li>
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <h1>Dashboard Geral</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Coelhos</h3>
+            <span id="totalCoelhos">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Machos</h3>
+            <span id="machos">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Fêmeas</h3>
+            <span id="femeas">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Prenhas</h3>
+            <span id="prenhas">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Filhotes</h3>
+            <span id="filhotes">0</span>
+        </div>
+
+    </div>
+
+    <div class="cards-financeiro">
+
+        <div class="card-fin">
+            <h3>Entradas</h3>
+            <span id="entradas">R$ 0,00</span>
+        </div>
+
+        <div class="card-fin">
+            <h3>Saídas</h3>
+            <span id="saidas">R$ 0,00</span>
+        </div>
+
+        <div class="card-fin">
+            <h3>Saldo Atual</h3>
+            <span id="saldo">R$ 0,00</span>
+        </div>
+
+    </div>
+
+    <div class="dashboard-premium">
+
+        <div class="painel">
+
+            <h2>Resumo Produtivo</h2>
+
+            <div class="indicadores">
+
+                <div>
+                    <strong id="totalNascidos">0</strong>
+                    <span>Nascidos</span>
+                </div>
+
+                <div>
+                    <strong id="taxaSobrevivencia">0%</strong>
+                    <span>Sobrevivência</span>
+                </div>
+
+                <div>
+                    <strong id="ninhadasAtivas">0</strong>
+                    <span>Ninhadas Ativas</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="painel">
+
+            <h2>Últimos Nascimentos</h2>
+
+            <div id="ultimosNascimentos"></div>
+
+        </div>
+
+    </div>
+
+    <div class="alertas-card">
+
+        <h2>⚠ Alertas do Sistema</h2>
+
+        <div id="listaAlertas">
+            <p>Nenhum alerta encontrado.</p>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+
+        <div class="footer-info">
+
+            <h3>🐰 Vincent Criatório</h3>
+
+            <p>
+                Sistema de Gestão para Cunicultura
+            </p>
+
+        </div>
+
+        <div class="footer-dev">
+
+            Desenvolvido por
+
+            <strong>
+                Kauan Oziel Claudino
+            </strong>
+
+            <br>
+
+            Sistemas para Internet
+
+            <br>
+
+            Versão 1.0
+
+        </div>
+
+    </footer>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+
+</html>

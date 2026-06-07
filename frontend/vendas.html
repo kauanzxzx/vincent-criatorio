@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Financeiro</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/vendas.css">
+
+</head>
+
+<body>
+
+    <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+<div class="sidebar">
+
+    <h2>Vincent Criatório</h2>
+
+    <ul>
+
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="coelhos.html">Coelhos</a></li>
+        <li><a href="vendas.html">Vendas</a></li>
+        <li><a href="financeiro.html">Financeiro</a></li>
+
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <div class="cards-vendas">
+
+    <div class="card-venda">
+        <h3>Total Vendido</h3>
+        <span id="totalVendido">R$ 0,00</span>
+    </div>
+
+    <div class="card-venda">
+        <h3>Quantidade Vendida</h3>
+        <span id="qtdVendida">0</span>
+    </div>
+
+    <div class="card-venda">
+        <h3>Ticket Médio</h3>
+        <span id="ticketMedio">R$ 0,00</span>
+    </div>
+
+</div>
+
+    <section class="formulario">
+
+    <h2>Registrar Venda</h2>
+
+    <select id="coelho">
+        <option value="">
+            Selecione o Coelho
+        </option>
+    </select>
+
+    <input
+        type="text"
+        id="cliente"
+        placeholder="Nome do cliente"
+    >
+
+    <input
+        type="date"
+        id="dataVenda"
+    >
+
+    <input
+        type="number"
+        id="valor"
+        step="0.01"
+        placeholder="Valor da venda"
+    >
+
+    <textarea
+        id="observacao"
+        placeholder="Observações"
+    ></textarea>
+
+    <button onclick="salvarVenda()">
+        Registrar Venda
+    </button>
+
+</section>
+
+<section>
+
+    <h2>Histórico de Vendas</h2>
+
+    <div class="tabela-container">
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Coelho</th>
+                <th>Valor</th>
+                <th>Ações</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelaVendas">
+
+        </tbody>
+
+    </table></div>
+
+</section>
+
+</div>
+
+<script src="js/vendas.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>

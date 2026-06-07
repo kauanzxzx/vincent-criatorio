@@ -1,0 +1,746 @@
+/* ==================================
+   FORMULÁRIO
+================================== */
+
+.formulario,
+.filtros{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.form-group{
+
+    width:100%;
+}
+
+.formulario textarea{
+
+    height:48px;
+
+    min-height:48px;
+
+    resize:none;
+
+    padding-top:13px;
+}
+
+/* ==================================
+   BOTÃO SALVAR
+================================== */
+
+.formulario button{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0A4E69,
+        #07384D
+    );
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    height:48px;
+
+    transition:.25s;
+}
+
+.formulario button:hover{
+
+    transform:
+    translateY(-2px);
+
+    box-shadow:
+    0 6px 18px rgba(7,56,77,.25);
+}
+
+/* ==================================
+   CARDS
+================================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap:20px;
+
+    margin-bottom:25px;
+}
+
+/* ==================================
+   TABELA
+================================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    border-radius:16px;
+
+    overflow:hidden;
+}
+
+th{
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+td{
+
+    vertical-align:middle;
+}
+
+tbody tr{
+
+    transition:.2s;
+}
+
+tbody tr:hover{
+
+    background:#f7fafc;
+}
+
+/* ==================================
+   FOTO
+================================== */
+
+.fotoTabela{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:3px solid #07384D;
+
+    transition:.25s;
+}
+
+.fotoTabela:hover{
+
+    transform:scale(1.08);
+}
+
+/* ==================================
+   COLUNA AÇÕES
+================================== */
+
+.acoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+/* ==================================
+   BOTÕES
+================================== */
+
+.editar{
+
+    background:#198754;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    font-size:13px;
+}
+
+.editar:hover{
+
+    filter:brightness(1.05);
+}
+
+.excluir{
+
+    background:#dc3545;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    font-size:13px;
+}
+
+.excluir:hover{
+
+    filter:brightness(1.05);
+}
+
+.historico{
+
+    background:#0d6efd;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    font-size:13px;
+}
+
+.historico:hover{
+
+    filter:brightness(1.05);
+}
+
+/* ==================================
+   MODAL
+================================== */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:
+    rgba(0,0,0,.55);
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(4px);
+
+    z-index:999;
+}
+
+.modal-content{
+
+    background:white;
+
+    width:700px;
+
+    max-width:95%;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.2);
+}
+
+.fechar{
+
+    float:right;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    color:#666;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.fechar:hover{
+
+    color:#dc3545;
+}
+
+/* ==================================
+   HISTÓRICO
+================================== */
+
+.historico-item{
+
+    padding:14px;
+
+    margin-bottom:10px;
+
+    background:#f8f9fa;
+
+    border-radius:10px;
+
+    border-left:4px solid #0A4E69;
+}
+
+/* ==================================
+   BADGES
+================================== */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+}
+
+.badge-macho{
+
+    background:#d6eaff;
+
+    color:#0A4E69;
+}
+
+.badge-femea{
+
+    background:#ffe0ef;
+
+    color:#b03060;
+}
+
+.badge-ativo{
+
+    background:#d4edda;
+
+    color:#155724;
+}
+
+.badge-vendido{
+
+    background:#f8d7da;
+
+    color:#721c24;
+}
+
+/* ==================================
+   RESPONSIVO
+================================== */
+
+@media(max-width:768px){
+
+    .acoes{
+
+        flex-direction:column;
+    }
+
+    .fotoTabela{
+
+        width:55px;
+        height:55px;
+    }
+
+}
+
+/* =========================
+   BADGES DE STATUS
+========================= */
+
+.status-badge{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+}
+
+/* Ativo */
+
+.status-ativo{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+/* Vendido */
+
+.status-vendido{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+}
+
+/* Inativo */
+
+.status-inativo{
+
+    background:#e5e7eb;
+
+    color:#374151;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge-sexo,
+.badge-status,
+.badge-peso,
+.badge-sem-peso{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+}
+
+/* Sexo */
+
+.badge-macho{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+}
+
+.badge-femea{
+
+    background:#fce7f3;
+
+    color:#be185d;
+}
+
+/* Status */
+
+.badge-ativo{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+.badge-vendido{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+}
+
+.badge-morto{
+
+    background:#e5e7eb;
+
+    color:#374151;
+}
+
+/* Peso */
+
+.badge-peso{
+
+    background:#e0f2fe;
+
+    color:#0369a1;
+}
+
+.badge-sem-peso{
+
+    background:#f3f4f6;
+
+    color:#6b7280;
+}
+
+/* Ações */
+
+.acoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+/* ==================================
+   AJUSTE PROFISSIONAL DA TABELA
+================================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    table-layout:fixed;
+
+    background:white;
+
+    border-radius:16px;
+
+    overflow:hidden;
+}
+
+/* Cabeçalhos */
+
+th{
+
+    background:#07384D;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+    padding:14px 10px;
+}
+
+/* Células */
+
+td{
+
+    padding:12px 10px;
+
+    text-align:center;
+
+    vertical-align:middle;
+
+    border-bottom:1px solid #edf2f7;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    word-wrap:break-word;
+}
+
+/* Linhas */
+
+tbody tr{
+
+    transition:.2s;
+}
+
+tbody tr:hover{
+
+    background:#f8fafc;
+}
+
+/* Larguras fixas */
+
+th:nth-child(1),
+td:nth-child(1){
+
+    width:90px;
+}
+
+/* ID */
+
+th:nth-child(2),
+td:nth-child(2){
+
+    width:90px;
+}
+
+/* Nome */
+
+th:nth-child(3),
+td:nth-child(3){
+
+    width:180px;
+}
+
+/* Sexo */
+
+th:nth-child(4),
+td:nth-child(4){
+
+    width:110px;
+}
+
+/* Raça */
+
+th:nth-child(5),
+td:nth-child(5){
+
+    width:150px;
+}
+
+/* Pelagem */
+
+th:nth-child(6),
+td:nth-child(6){
+
+    width:130px;
+}
+
+/* Peso */
+
+th:nth-child(7),
+td:nth-child(7){
+
+    width:100px;
+}
+
+/* Observações */
+
+th:nth-child(8),
+td:nth-child(8){
+
+    width:220px;
+}
+
+/* Idade */
+
+th:nth-child(9),
+td:nth-child(9){
+
+    width:120px;
+}
+
+/* Status */
+
+th:nth-child(10),
+td:nth-child(10){
+
+    width:120px;
+}
+
+/* Ações */
+
+th:nth-child(11),
+td:nth-child(11){
+
+    width:280px;
+}
+
+/* Container dos botões */
+
+.acoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:nowrap;
+}
+
+/* Botões alinhados */
+
+.acoes button{
+
+    min-width:85px;
+
+    height:36px;
+
+    padding:0 12px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    border-radius:8px;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea,
+.filtros input,
+.filtros select{
+
+    height:48px;
+
+    padding:12px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:14px;
+}
+
+.fotoTabela{
+    cursor:pointer;
+}
+
+.modal-foto-content{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    max-width:90%;
+    max-height:90%;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+#fotoAmpliada{
+    max-width:100%;
+    max-height:75vh;
+    border-radius:14px;
+    object-fit:contain;
+}

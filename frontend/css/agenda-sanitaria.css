@@ -1,0 +1,195 @@
+/* ==================================
+   CARD RESUMO
+================================== */
+
+.card{
+    background:white;
+    padding:24px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+    margin-bottom:25px;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    right:-35px;
+    top:-35px;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:rgba(46,125,50,.08);
+}
+
+.card h3{
+    margin:0;
+    color:#555;
+    font-size:15px;
+}
+
+.card span{
+    display:block;
+    margin-top:10px;
+    font-size:32px;
+    font-weight:700;
+    color:#2e7d32;
+}
+
+/* ==================================
+   TABELA
+================================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+thead{
+    background:
+    linear-gradient(
+        135deg,
+        #2e7d32,
+        #1b5e20
+    );
+
+    color:white;
+}
+
+th{
+    padding:16px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+}
+
+td{
+    padding:14px 12px;
+    text-align:center;
+    vertical-align:middle;
+    border-bottom:1px solid #eef2f6;
+}
+
+tbody tr{
+    transition:.2s;
+}
+
+tbody tr:hover{
+    background:#f6fbf7;
+}
+
+/* ==================================
+   STATUS
+================================== */
+
+.status-pendente{
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.status-ok{
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+/* ==================================
+   BOTÃO VERMIFUGAR
+================================== */
+
+.salvar{
+    background:
+    linear-gradient(
+        135deg,
+        #2e7d32,
+        #1b5e20
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:9px 16px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.salvar:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 6px 15px rgba(
+        46,125,50,.25
+    );
+}
+
+/* ==================================
+   ID DO COELHO
+================================== */
+
+td:first-child{
+
+    font-weight:700;
+
+    color:#07384D;
+}
+
+/* ==================================
+   IDADE
+================================== */
+
+td:nth-child(3){
+
+    font-weight:600;
+
+    color:#555;
+}
+
+/* ==================================
+   RESPONSIVO
+================================== */
+
+@media(max-width:768px){
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+
+}

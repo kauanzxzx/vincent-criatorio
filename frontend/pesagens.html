@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pesagens</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pesagens.css">
+
+</head>
+
+<body>
+
+   <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+<div class="sidebar">
+
+    <h2>Vincent Criatório</h2>
+
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="coelhos.html">Coelhos</a></li>
+        <li><a href="cruzamentos.html">Cruzamentos</a></li>
+        <li><a href="ninhadas.html">Ninhadas</a></li>
+        <li><a href="pesagens.html">Pesagens</a></li>
+        <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
+        <li><a href="alertas.html">Alertas</a></li>
+        <li><a href="financeiro.html">Financeiro</a></li>
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <h1>Controle de Pesagens</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Pesagens</h3>
+            <span id="totalPesagens">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Peso Médio</h3>
+            <span id="pesoMedio">0 kg</span>
+        </div>
+
+        <div class="card">
+            <h3>Última Pesagem</h3>
+            <span id="ultimaPesagem">--</span>
+        </div>
+
+    </div>
+
+    <div class="formulario">
+
+        <select id="codigo"></select>
+
+        <input
+            type="date"
+            id="data">
+
+        <input
+            type="number"
+            id="peso"
+            step="0.001"
+            placeholder="Peso (kg)">
+
+        <button onclick="salvarPesagem()">
+            Registrar
+        </button>
+
+    </div>
+
+    <div class="tabela-container">
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Peso</th>
+                <th>Ações</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelaPesagens">
+
+        </tbody>
+
+    </table></div>
+
+</div>
+
+<script src="js/pesagens.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>

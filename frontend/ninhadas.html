@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ninhadas</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ninhadas.css">
+
+</head>
+
+<body>
+    
+    <button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+
+    ☰
+
+</button>
+
+<div class="sidebar">
+
+    <h2>Vincent Criatório</h2>
+
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="coelhos.html">Coelhos</a></li>
+        <li><a href="cruzamentos.html">Cruzamentos</a></li>
+        <li><a href="ninhadas.html">Ninhadas</a></li>
+        <li><a href="pesagens.html">Pesagens</a></li>  
+        <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
+        <li><a href="alertas.html">Alertas</a></li>
+        <li><a href="financeiro.html">Financeiro</a></li>
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <h1>Controle de Ninhadas</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Ninhadas</h3>
+            <span id="totalNinhadas">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Nascidos</h3>
+            <span id="totalNascidos">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Vivos</h3>
+            <span id="totalVivos">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Mortos</h3>
+            <span id="totalMortos">0</span>
+        </div>
+
+    </div>
+
+    <div class="formulario">
+
+        <select id="mae"></select>
+
+        <input type="date" id="dataParto">
+
+        <input type="number" id="nascidos" placeholder="Nascidos">
+
+        <input type="number" id="vivos" placeholder="Vivos">
+
+        <input type="number" id="mortos" placeholder="Mortos">
+
+        <button onclick="salvarNinhada()">
+            Registrar Parto
+        </button>
+
+    </div>
+    
+    <div class="tabela-container">
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Mãe</th>
+                <th>Pai</th>
+                <th>Data Parto</th>
+                <th>Nascidos</th>
+                <th>Vivos</th>
+                <th>Mortos</th>
+                <th>Desmame Previsto</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelaNinhadas">
+
+        </tbody>
+
+    </table></div>
+
+</div>
+
+<script src="js/ninhadas.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>

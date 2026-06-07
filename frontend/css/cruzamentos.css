@@ -1,0 +1,344 @@
+/* ==================================
+   FORMULÁRIO
+================================== */
+
+.formulario{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.formulario input,
+.formulario select{
+
+    height:48px;
+
+    padding:12px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    transition:.25s;
+}
+
+.formulario input:focus,
+.formulario select:focus{
+
+    outline:none;
+
+    border-color:#0A4E69;
+
+    box-shadow:
+    0 0 0 4px rgba(10,78,105,.12);
+}
+
+.formulario button{
+
+    height:48px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0A4E69,
+        #07384D
+    );
+
+    transition:.25s;
+}
+
+.formulario button:hover{
+
+    transform:
+    translateY(-2px);
+
+    box-shadow:
+    0 8px 18px rgba(7,56,77,.25);
+}
+
+/* ==================================
+   TABELA
+================================== */
+
+table{
+
+    width:100%;
+
+    background:white;
+
+    border-collapse:collapse;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.06);
+}
+
+thead{
+
+    background:
+    linear-gradient(
+        135deg,
+        #07384D,
+        #0A4E69
+    );
+
+    color:white;
+}
+
+th{
+
+    padding:16px 12px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+}
+
+td{
+
+    padding:14px 12px;
+
+    text-align:center;
+
+    border-bottom:1px solid #edf2f7;
+
+    vertical-align:middle;
+}
+
+tbody tr{
+
+    transition:.2s;
+}
+
+tbody tr:hover{
+
+    background:#f8fafc;
+}
+
+/* ==================================
+   COLUNA AÇÕES
+================================== */
+
+th:last-child,
+td:last-child{
+
+    min-width:220px;
+}
+
+.acoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+/* ==================================
+   BOTÃO PARTO
+================================== */
+
+.parto{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0d6efd,
+        #0a58ca
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.parto:hover{
+
+    transform:
+    translateY(-1px);
+
+    box-shadow:
+    0 4px 10px rgba(13,110,253,.25);
+}
+
+/* ==================================
+   BOTÃO EXCLUIR
+================================== */
+
+.excluir{
+
+    background:
+    linear-gradient(
+        135deg,
+        #dc3545,
+        #b91c1c
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.excluir:hover{
+
+    transform:
+    translateY(-1px);
+
+    box-shadow:
+    0 4px 10px rgba(220,53,69,.25);
+}
+
+/* ==================================
+   BADGES DE STATUS
+================================== */
+
+.status-ok{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+}
+
+.status-pendente{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+}
+
+/* ==================================
+   BADGES DE ANIMAIS
+================================== */
+
+.badge-macho{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.badge-femea{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#fce7f3;
+
+    color:#be185d;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+/* ==================================
+   RESPONSIVO
+================================== */
+
+@media(max-width:768px){
+
+    .acoes{
+
+        flex-direction:column;
+    }
+
+    table{
+
+        font-size:13px;
+    }
+
+}
