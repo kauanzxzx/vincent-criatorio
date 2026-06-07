@@ -8,6 +8,41 @@ let pesagens = [];
 let vermifugacoes = [];
 
 // =========================
+// FUNÇÕES AUXILIARES
+// =========================
+
+function dataLocal(data){
+
+    if(!data)
+        return null;
+
+    return new Date(
+        String(data).split("T")[0] + "T00:00:00"
+    );
+
+}
+
+function jaPariu(valor){
+
+    return (
+        valor === true ||
+        valor === 1 ||
+        valor === "1"
+    );
+
+}
+
+function estaDesmamada(valor){
+
+    return (
+        valor === true ||
+        valor === 1 ||
+        valor === "1"
+    );
+
+}
+
+// =========================
 // CARREGAR DADOS DA API
 // =========================
 
@@ -195,19 +230,16 @@ function atualizarPrenhasDashboard(){
     const prenhas =
     cruzamentos.filter(c => {
 
-        const jaPariu =
-        c.pariu === true ||
-        c.pariu === 1;
-
         const parto =
-        new Date(c.dataPrevista);
-
-        parto.setHours(
-            0,0,0,0
+        dataLocal(
+            c.dataPrevista
         );
 
+        if(!parto)
+            return false;
+
         return (
-            !jaPariu &&
+            !jaPariu(c.pariu) &&
             parto >= hoje
         );
 
@@ -247,22 +279,19 @@ function atualizarAlertasDashboard(){
 
     cruzamentos.forEach(c => {
 
-        const jaPariu =
-        c.pariu === true ||
-        c.pariu === 1;
-
-        if(jaPariu)
+        if(jaPariu(c.pariu))
             return;
 
         const prevista =
-        new Date(c.dataPrevista);
-
-        prevista.setHours(
-            0,0,0,0
+        dataLocal(
+            c.dataPrevista
         );
 
+        if(!prevista)
+            return;
+
         const diferenca =
-        Math.ceil(
+        Math.floor(
             (prevista - hoje)
             /
             86400000
@@ -325,15 +354,20 @@ function atualizarAlertasDashboard(){
 
     ninhadas.forEach(n => {
 
-        const desmamada =
-        n.desmamada === true ||
-        n.desmamada === 1;
-
-        if(desmamada)
+        if(
+            estaDesmamada(
+                n.desmamada
+            )
+        )
             return;
 
         const parto =
-        new Date(n.dataParto);
+        dataLocal(
+            n.dataParto
+        );
+
+        if(!parto)
+            return;
 
         const desmame =
         new Date(parto);
@@ -347,7 +381,7 @@ function atualizarAlertasDashboard(){
         );
 
         const diferenca =
-        Math.ceil(
+        Math.floor(
             (desmame - hoje)
             /
             86400000
@@ -416,11 +450,12 @@ function atualizarAlertasDashboard(){
             return;
 
         const nascimento =
-        new Date(c.nascimento);
-
-        nascimento.setHours(
-            0,0,0,0
+        dataLocal(
+            c.nascimento
         );
+
+        if(!nascimento)
+            return;
 
         const dias =
         Math.floor(
@@ -490,13 +525,12 @@ function atualizarAlertasDashboard(){
         );
 
         const ultima =
-        new Date(
+        dataLocal(
             historico[0].data
         );
 
-        ultima.setHours(
-            0,0,0,0
-        );
+        if(!ultima)
+            return;
 
         const dias =
         Math.floor(
@@ -635,9 +669,8 @@ function atualizarDashboardPremium(){
     const ativas =
     ninhadas.filter(n => {
 
-        return !(
-            n.desmamada === true ||
-            n.desmamada === 1
+        return !estaDesmamada(
+            n.desmamada
         );
 
     }).length;

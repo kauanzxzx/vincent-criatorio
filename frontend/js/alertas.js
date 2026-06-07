@@ -9,9 +9,24 @@ let vermifugacoes = [];
 
 let alertas = [];
 
-// ====================
-// CARREGAR DADOS
-// ====================
+function dataLocal(data){
+
+    if(!data)
+        return null;
+
+    return new Date(
+        String(data).split("T")[0] + "T00:00:00"
+    );
+}
+
+function jaPariu(valor){
+
+    return (
+        valor === true ||
+        valor === 1 ||
+        valor === "1"
+    );
+}
 
 async function carregarAlertas(){
 
@@ -47,163 +62,88 @@ async function carregarAlertas(){
     }catch(erro){
 
         console.error(erro);
-
-        alert(
-            "Erro ao carregar alertas."
-        );
+        alert("Erro ao carregar alertas.");
 
     }
 
 }
 
-// ====================
-// GERAR ALERTAS
-// ====================
-
 function gerarAlertas(){
 
     alertas = [];
 
-    const hoje =
-    new Date();
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0);
 
-    hoje.setHours(
-        0,0,0,0
-    );
-
-    // ====================
     // DESMAME PENDENTE
-    // ====================
 
     ninhadas.forEach(n => {
 
         const desmamada =
         n.desmamada === true ||
-        n.desmamada === 1;
+        n.desmamada === 1 ||
+        n.desmamada === "1";
 
         if(desmamada)
             return;
 
-        const parto =
-        new Date(n.dataParto);
-
         const desmame =
-        new Date(parto);
+        dataLocal(n.dataParto);
 
         desmame.setDate(
             desmame.getDate() + 30
         );
 
-        desmame.setHours(
-            0,0,0,0
-        );
-
         if(hoje >= desmame){
 
             alertas.push({
-
-                titulo:
-                "Desmame Pendente",
-
-                mensagem:
-                `A ninhada de ${n.mae} já pode ser desmamada.`
-
+                titulo:"Desmame Pendente",
+                mensagem:`A ninhada de ${n.mae} já pode ser desmamada.`
             });
 
         }
 
     });
 
-    // ====================
-    // PARTO PRÓXIMO
-    // ====================
+    // PARTO PRÓXIMO E ATRASADO
 
     cruzamentos.forEach(c => {
 
-        const jaPariu =
-        c.pariu === true ||
-        c.pariu === 1;
-
-        if(jaPariu)
+        if(jaPariu(c.pariu))
             return;
 
         const parto =
-        new Date(c.dataPrevista);
+        dataLocal(c.dataPrevista);
 
-        parto.setHours(
-            0,0,0,0
-        );
-
-        const dias =
-        Math.ceil(
-            (parto - hoje)
-            / 86400000
+        const diferenca =
+        Math.floor(
+            (parto - hoje) / 86400000
         );
 
         if(
-            dias >= 0 &&
-            dias <= 5
+            diferenca >= 0 &&
+            diferenca <= 5
         ){
 
             alertas.push({
-
-                titulo:
-                "Parto Próximo",
-
-                mensagem:
-                `${c.matrizNome} deve parir em ${dias} dia(s).`
-
+                titulo:"Parto Próximo",
+                mensagem:`${c.matrizNome} deve parir em ${diferenca} dia(s).`
             });
 
         }
 
-    });
-
-    // ====================
-    // PARTO ATRASADO
-    // ====================
-
-    cruzamentos.forEach(c => {
-
-        const jaPariu =
-        c.pariu === true ||
-        c.pariu === 1;
-
-        if(jaPariu)
-            return;
-
-        const parto =
-        new Date(c.dataPrevista);
-
-        parto.setHours(
-            0,0,0,0
-        );
-
-        const dias =
-        Math.floor(
-            (hoje - parto)
-            / 86400000
-        );
-
-        if(dias > 0){
+        if(diferenca < 0){
 
             alertas.push({
-
-                titulo:
-                "Parto Atrasado",
-
-                mensagem:
-                `${c.matrizNome} está com parto atrasado há ${dias} dia(s).`
-
+                titulo:"Parto Atrasado",
+                mensagem:`${c.matrizNome} está com parto atrasado há ${Math.abs(diferenca)} dia(s).`
             });
 
         }
 
     });
 
-    // ====================
     // VERMIFUGAÇÃO PENDENTE
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -211,16 +151,11 @@ function gerarAlertas(){
             return;
 
         const nascimento =
-        new Date(c.nascimento);
-
-        nascimento.setHours(
-            0,0,0,0
-        );
+        dataLocal(c.nascimento);
 
         const dias =
         Math.floor(
-            (hoje - nascimento)
-            / 86400000
+            (hoje - nascimento) / 86400000
         );
 
         const vermifugado =
@@ -235,22 +170,15 @@ function gerarAlertas(){
         ){
 
             alertas.push({
-
-                titulo:
-                "Vermifugação Pendente",
-
-                mensagem:
-                `${c.id} - ${c.nome} possui ${dias} dias e precisa ser vermifugado.`
-
+                titulo:"Vermifugação Pendente",
+                mensagem:`${c.id} - ${c.nome} possui ${dias} dias e precisa ser vermifugado.`
             });
 
         }
 
     });
 
-    // ====================
     // SEM PESAGEM
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -264,22 +192,15 @@ function gerarAlertas(){
         if(!existe){
 
             alertas.push({
-
-                titulo:
-                "Sem Pesagem",
-
-                mensagem:
-                `${c.id} - ${c.nome} ainda não possui pesagens.`
-
+                titulo:"Sem Pesagem",
+                mensagem:`${c.id} - ${c.nome} ainda não possui pesagens.`
             });
 
         }
 
     });
 
-    // ====================
     // PESAGEM ATRASADA
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -293,48 +214,32 @@ function gerarAlertas(){
         if(historico.length === 0)
             return;
 
-        historico.sort((a,b)=>
-
-            new Date(b.data)
-            -
+        historico.sort(
+            (a,b)=>
+            new Date(b.data) -
             new Date(a.data)
-
         );
 
         const ultimaData =
-        new Date(
-            historico[0].data
-        );
-
-        ultimaData.setHours(
-            0,0,0,0
-        );
+        dataLocal(historico[0].data);
 
         const diasSemPesagem =
         Math.floor(
-            (hoje - ultimaData)
-            / 86400000
+            (hoje - ultimaData) / 86400000
         );
 
         if(diasSemPesagem > 30){
 
             alertas.push({
-
-                titulo:
-                "Pesagem Atrasada",
-
-                mensagem:
-                `${c.id} - ${c.nome} está há ${diasSemPesagem} dias sem pesagem.`
-
+                titulo:"Pesagem Atrasada",
+                mensagem:`${c.id} - ${c.nome} está há ${diasSemPesagem} dias sem pesagem.`
             });
 
         }
 
     });
 
-    // ====================
     // MATRIZ SEM COBERTURA
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -352,22 +257,15 @@ function gerarAlertas(){
         if(cruzamentosMae.length === 0){
 
             alertas.push({
-
-                titulo:
-                "Matriz Sem Cobertura",
-
-                mensagem:
-                `${c.nome} nunca foi cruzada.`
-
+                titulo:"Matriz Sem Cobertura",
+                mensagem:`${c.nome} nunca foi cruzada.`
             });
 
         }
 
     });
 
-    // ====================
     // COBERTURA ATRASADA
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -385,49 +283,34 @@ function gerarAlertas(){
         if(cruzamentosMae.length === 0)
             return;
 
-        cruzamentosMae.sort((a,b)=>
-
-            new Date(b.dataCruzamento)
-            -
+        cruzamentosMae.sort(
+            (a,b)=>
+            new Date(b.dataCruzamento) -
             new Date(a.dataCruzamento)
-
         );
 
         const ultimaCobertura =
-        new Date(
-            cruzamentosMae[0]
-            .dataCruzamento
-        );
-
-        ultimaCobertura.setHours(
-            0,0,0,0
+        dataLocal(
+            cruzamentosMae[0].dataCruzamento
         );
 
         const dias =
         Math.floor(
-            (hoje - ultimaCobertura)
-            / 86400000
+            (hoje - ultimaCobertura) / 86400000
         );
 
         if(dias > 120){
 
             alertas.push({
-
-                titulo:
-                "Cobertura Atrasada",
-
-                mensagem:
-                `${c.nome} está há ${dias} dias sem cruzamento.`
-
+                titulo:"Cobertura Atrasada",
+                mensagem:`${c.nome} está há ${dias} dias sem cruzamento.`
             });
 
         }
 
     });
 
-    // ====================
     // PRONTA PARA COBERTURA
-    // ====================
 
     coelhos.forEach(c => {
 
@@ -445,70 +328,49 @@ function gerarAlertas(){
         if(partosDaMae.length === 0)
             return;
 
-        partosDaMae.sort((a,b)=>
-
-            new Date(b.dataParto)
-            -
+        partosDaMae.sort(
+            (a,b)=>
+            new Date(b.dataParto) -
             new Date(a.dataParto)
-
         );
 
         const ultimoParto =
-        new Date(
+        dataLocal(
             partosDaMae[0].dataParto
-        );
-
-        ultimoParto.setHours(
-            0,0,0,0
         );
 
         const diasSemParto =
         Math.floor(
-            (hoje - ultimoParto)
-            / 86400000
+            (hoje - ultimoParto) / 86400000
         );
 
         if(diasSemParto > 45){
 
             alertas.push({
-
-                titulo:
-                "Pronta para Cobertura",
-
-                mensagem:
-                `${c.nome} está há ${diasSemParto} dias sem parto.`
-
+                titulo:"Pronta para Cobertura",
+                mensagem:`${c.nome} está há ${diasSemParto} dias sem parto.`
             });
 
         }
 
     });
 
-    // ====================
     // ANIMAIS VENDIDOS
-    // ====================
 
     coelhos.forEach(c => {
 
         if(c.status === "Vendido"){
 
             alertas.push({
-
-                titulo:
-                "Conferir Cadastro",
-
-                mensagem:
-                `${c.id} - ${c.nome} está marcado como vendido.`
-
+                titulo:"Conferir Cadastro",
+                mensagem:`${c.id} - ${c.nome} está marcado como vendido.`
             });
 
         }
 
     });
 
-    // ====================
     // FINANCEIRO
-    // ====================
 
     const entradas =
     financeiro
@@ -532,19 +394,14 @@ function gerarAlertas(){
     if(saldo < 0){
 
         alertas.push({
-
-            titulo:
-            "Saldo Negativo",
-
-            mensagem:
-            `O caixa está negativo em ${Math.abs(saldo).toLocaleString(
+            titulo:"Saldo Negativo",
+            mensagem:`O caixa está negativo em ${Math.abs(saldo).toLocaleString(
                 "pt-BR",
                 {
                     style:"currency",
                     currency:"BRL"
                 }
             )}.`
-
         });
 
     }
@@ -553,16 +410,10 @@ function gerarAlertas(){
 
 }
 
-// ====================
-// EXIBIÇÃO
-// ====================
-
 function exibirAlertas(){
 
     const lista =
-    document.getElementById(
-        "listaAlertas"
-    );
+    document.getElementById("listaAlertas");
 
     lista.innerHTML = "";
 
@@ -574,9 +425,7 @@ function exibirAlertas(){
 
             <h3>✅ Tudo certo</h3>
 
-            <p>
-                Nenhum alerta encontrado.
-            </p>
+            <p>Nenhum alerta encontrado.</p>
 
         </div>
 
@@ -586,8 +435,7 @@ function exibirAlertas(){
 
         alertas.forEach(a => {
 
-            let classe =
-            "alerta";
+            let classe = "alerta";
 
             if(
                 a.titulo.includes("Atrasado") ||
@@ -597,8 +445,7 @@ function exibirAlertas(){
                 a.titulo.includes("Sem Pesagem")
             ){
 
-                classe +=
-                " alerta-critico";
+                classe += " alerta-critico";
 
             }
 
@@ -618,9 +465,8 @@ function exibirAlertas(){
 
     }
 
-    document.getElementById(
-        "totalAlertas"
-    ).textContent =
+    document.getElementById("totalAlertas")
+    .textContent =
     alertas.length;
 
 }
