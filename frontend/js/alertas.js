@@ -50,12 +50,16 @@ function completouSeisMesesHoje(dataNascimento){
     new Date(nascimento);
 
     seisMeses.setMonth(
-        seisMeses.getMonth() + 6
+        nascimento.getMonth() + 6
     );
 
     seisMeses.setHours(0,0,0,0);
 
-    return hoje.getTime() === seisMeses.getTime();
+    return (
+        hoje.getFullYear() === seisMeses.getFullYear() &&
+        hoje.getMonth() === seisMeses.getMonth() &&
+        hoje.getDate() === seisMeses.getDate()
+    );
 }
 
 function dataLocal(data){
@@ -301,18 +305,16 @@ coelhos.forEach(c => {
         return;
 
     if(
-        completouSeisMesesHoje(
-            c.nascimento
-        )
+        idadeEmMeses(c.nascimento) >= 6 &&
+        idadeEmMeses(c.nascimento) < 7
     ){
-
         alertas.push({
 
             titulo:
-            "Fêmea Apta",
+            "Matriz Jovem",
 
             mensagem:
-            `${c.id} - ${c.nome} completou 6 meses hoje e já pode ser avaliada para reprodução.`
+            `${c.id} - ${c.nome} atingiu idade reprodutiva recentemente.`
 
         });
 
