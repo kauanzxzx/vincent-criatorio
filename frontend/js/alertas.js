@@ -9,6 +9,55 @@ let vermifugacoes = [];
 
 let alertas = [];
 
+function idadeEmMeses(dataNascimento){
+
+    const nascimento =
+    dataLocal(dataNascimento);
+
+    if(!nascimento)
+        return 0;
+
+    const hoje =
+    new Date();
+
+    hoje.setHours(0,0,0,0);
+
+    let meses =
+    (hoje.getFullYear() - nascimento.getFullYear()) * 12 +
+    (hoje.getMonth() - nascimento.getMonth());
+
+    if(hoje.getDate() < nascimento.getDate()){
+        meses--;
+    }
+
+    return meses;
+}
+
+function completouSeisMesesHoje(dataNascimento){
+
+    const nascimento =
+    dataLocal(dataNascimento);
+
+    if(!nascimento)
+        return false;
+
+    const hoje =
+    new Date();
+
+    hoje.setHours(0,0,0,0);
+
+    const seisMeses =
+    new Date(nascimento);
+
+    seisMeses.setMonth(
+        seisMeses.getMonth() + 6
+    );
+
+    seisMeses.setHours(0,0,0,0);
+
+    return hoje.getTime() === seisMeses.getTime();
+}
+
 function dataLocal(data){
 
     if(!data)
@@ -238,30 +287,58 @@ function gerarAlertas(){
         }
 
     });
+    
+    // ====================
+// FÊMEA COMPLETOU 6 MESES
+// ====================
+
+coelhos.forEach(c => {
+
+    if(c.sexo !== "Fêmea")
+        return;
+
+    if(c.status !== "Ativo")
+        return;
+
+    if(
+        completouSeisMesesHoje(
+            c.nascimento
+        )
+    ){
+
+        alertas.push({
+
+            titulo:
+            "Fêmea Apta",
+
+            mensagem:
+            `${c.id} - ${c.nome} completou 6 meses hoje e já pode ser avaliada para reprodução.`
+
+        });
+
+    }
+
+});
 
     // MATRIZ SEM COBERTURA
 
     coelhos.forEach(c => {
 
-        if(c.sexo !== "Fêmea")
-            return;
+    if(c.sexo !== "Fêmea")
+        return;
 
-        if(c.status !== "Ativo")
-            return;
+    if(c.status !== "Ativo")
+        return;
 
-        const cruzamentosMae =
-        cruzamentos.filter(
-            cr => cr.maeId === c.id
-        );
+    if(
+        idadeEmMeses(c.nascimento) < 6
+    )
+        return;
 
-        if(cruzamentosMae.length === 0){
-
-            alertas.push({
-                titulo:"Matriz Sem Cobertura",
-                mensagem:`${c.nome} nunca foi cruzada.`
-            });
-
-        }
+    const cruzamentosMae =
+    cruzamentos.filter(
+        cr => cr.maeId === c.id
+    );
 
     });
 
@@ -274,6 +351,11 @@ function gerarAlertas(){
 
         if(c.status !== "Ativo")
             return;
+
+        if(
+    idadeEmMeses(c.nascimento) < 6
+    )
+        return;
 
         const cruzamentosMae =
         cruzamentos.filter(
@@ -319,6 +401,11 @@ function gerarAlertas(){
 
         if(c.status !== "Ativo")
             return;
+
+        if(
+    idadeEmMeses(c.nascimento) < 6
+    )
+        return;
 
         const partosDaMae =
         ninhadas.filter(
