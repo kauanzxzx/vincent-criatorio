@@ -10,6 +10,120 @@ let ninhadas = [];
 
 let indiceEdicao = null;
 
+// =========================
+// FUNÇÕES AUXILIARES
+// =========================
+
+function dataLocal(data){
+
+    if(!data)
+        return null;
+
+    return new Date(
+        String(data).split("T")[0] + "T00:00:00"
+    );
+
+}
+
+function formatarData(data){
+
+    const dataFormatada =
+    dataLocal(data);
+
+    if(!dataFormatada)
+        return "-";
+
+    return dataFormatada
+    .toLocaleDateString("pt-BR");
+
+}
+
+function formatarDataInput(data){
+
+    if(!data)
+        return "";
+
+    return String(data)
+    .split("T")[0];
+
+}
+
+function calcularIdadeFilhotes(dataParto){
+
+    const parto =
+    dataLocal(dataParto);
+
+    if(!parto){
+
+        return {
+            dias:0,
+            semanas:0,
+            texto:"0 dias"
+        };
+
+    }
+
+    const hoje =
+    new Date();
+
+    hoje.setHours(
+        0,0,0,0
+    );
+
+    const dias =
+    Math.max(
+        0,
+        Math.floor(
+            (hoje - parto)
+            / 86400000
+        )
+    );
+
+    const semanas =
+    Math.floor(
+        dias / 7
+    );
+
+    return {
+        dias,
+        semanas,
+        texto:
+        `${dias} dias (${semanas} sem.)`
+    };
+
+}
+
+function statusIdadeFilhotes(dias){
+
+    if(dias < 30){
+
+        return {
+            classe:"idade-jovem",
+            texto:"Em crescimento"
+        };
+
+    }
+
+    if(dias <= 90){
+
+        return {
+            classe:"idade-desmame",
+            texto:"Pós-desmame"
+        };
+
+    }
+
+    return {
+        classe:"idade-adulto",
+        texto:"Independente"
+    };
+
+}
+
+// =========================
+// CARREGAR DADOS
+// =========================
+
 async function carregarDados(){
 
     const respostaCruzamentos =
@@ -29,7 +143,12 @@ async function carregarDados(){
     atualizarTabela();
 
     atualizarCards();
+
 }
+
+// =========================
+// SELECT DE MÃES
+// =========================
 
 function carregarMaes(){
 
@@ -57,6 +176,10 @@ function carregarMaes(){
     }
 
 }
+
+// =========================
+// SALVAR NINHADA
+// =========================
 
 async function salvarNinhada(){
 
@@ -138,7 +261,8 @@ async function salvarNinhada(){
         if(indiceEdicao !== null){
 
             dados.desmamada =
-            ninhadas[indiceEdicao].desmamada;
+            ninhadas[indiceEdicao]
+            .desmamada;
 
             await fetch(
                 `${API}/ninhadas/${ninhadas[indiceEdicao].id_ninhada}`,
@@ -166,7 +290,9 @@ async function salvarNinhada(){
                 }
             );
 
-            localStorage.removeItem("partoPendente");
+            localStorage.removeItem(
+                "partoPendente"
+            );
 
         }
 
@@ -186,22 +312,9 @@ async function salvarNinhada(){
 
 }
 
-function formatarData(data){
-
-    if(!data)
-        return "-";
-
-    return new Date(data)
-    .toLocaleDateString("pt-BR");
-}
-
-function formatarDataInput(data){
-
-    if(!data)
-        return "";
-
-    return String(data).split("T")[0];
-}
+// =========================
+// ATUALIZAR TABELA
+// =========================
 
 function atualizarTabela(){
 
@@ -215,7 +328,9 @@ function atualizarTabela(){
     ninhadas.forEach((n,index)=>{
 
         const parto =
-        new Date(n.dataParto);
+        dataLocal(
+            n.dataParto
+        );
 
         const desmame =
         new Date(parto);
@@ -229,9 +344,20 @@ function atualizarTabela(){
             "pt-BR"
         );
 
+        const idade =
+        calcularIdadeFilhotes(
+            n.dataParto
+        );
+
+        const statusIdade =
+        statusIdadeFilhotes(
+            idade.dias
+        );
+
         const desmamada =
         n.desmamada === 1 ||
-        n.desmamada === true;
+        n.desmamada === true ||
+        n.desmamada === "1";
 
         tabela.innerHTML += `
 
@@ -265,8 +391,24 @@ function atualizarTabela(){
                 ${n.mortos}
             </td>
 
-            <td data-label="Data Desmame">
-                ${desmameFormatado}
+            <td data-label="Desmame / Idade">
+
+                <div class="desmame-info">
+
+                    <strong>
+                        ${desmameFormatado}
+                    </strong>
+
+                    <span class="idade-filhotes ${statusIdade.classe}">
+                        ${idade.texto}
+                    </span>
+
+                    <small>
+                        ${statusIdade.texto}
+                    </small>
+
+                </div>
+
             </td>
 
             <td data-label="Status">
@@ -335,6 +477,10 @@ function atualizarTabela(){
     });
 }
 
+// =========================
+// CARDS
+// =========================
+
 function atualizarCards(){
 
     document.getElementById(
@@ -367,6 +513,10 @@ function atualizarCards(){
     );
 }
 
+// =========================
+// EDITAR
+// =========================
+
 function editar(index){
 
     const ninhada =
@@ -397,6 +547,10 @@ function editar(index){
         behavior:"smooth"
     });
 }
+
+// =========================
+// EXCLUIR
+// =========================
 
 async function excluir(index){
 
@@ -429,13 +583,22 @@ async function excluir(index){
 
 }
 
+// =========================
+// LIMPAR FORMULÁRIO
+// =========================
+
 function limparFormulario(){
 
     document.getElementById("dataParto").value = "";
     document.getElementById("nascidos").value = "";
     document.getElementById("vivos").value = "";
     document.getElementById("mortos").value = "";
+
 }
+
+// =========================
+// DESMAMAR
+// =========================
 
 async function desmamar(index){
 
@@ -480,6 +643,10 @@ async function desmamar(index){
 
 }
 
+// =========================
+// GERAR FILHOTE
+// =========================
+
 function gerarFilhote(index){
 
     const n =
@@ -501,5 +668,9 @@ function gerarFilhote(index){
     window.location.href =
     "coelhos.html";
 }
+
+// =========================
+// INICIALIZAÇÃO
+// =========================
 
 carregarDados();

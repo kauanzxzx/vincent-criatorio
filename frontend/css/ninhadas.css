@@ -362,3 +362,71 @@ td:nth-child(7){
 
     font-weight:700;
 }
+
+.desmame-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:5px;
+
+}
+
+.desmame-info strong{
+
+    color:#07384D;
+
+    font-size:14px;
+
+}
+
+.idade-filhotes{
+
+    display:inline-block;
+
+    padding:5px 10px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.idade-jovem{
+
+    background:#e0f2fe;
+
+    color:#0369a1;
+
+}
+
+.idade-desmame{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.idade-adulto{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+}
+
+.desmame-info small{
+
+    font-size:11px;
+
+    color:#64748b;
+
+    font-weight:600;
+
+}
