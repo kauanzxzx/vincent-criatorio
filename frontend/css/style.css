@@ -638,6 +638,30 @@ td[data-label="Ações"]::before{
         margin-left:0;
         padding-top:75px;
     }
+
+    .card h3{
+
+        margin:0;
+
+        font-size:18px;
+
+        color:#5b524d;
+
+        font-weight:600;
+
+    }
+
+    .card span{
+
+        font-size:33px;
+
+        font-weight:700;
+
+        color:#07384D;
+
+        line-height:1;
+
+    }
 }
 
 @media(max-width:900px){
@@ -723,5 +747,51 @@ td[data-label="Ações"]::before{
     invert(1);
 
     opacity:.9;
+
+}
+
+.card-icon{
+
+    width:56px;
+
+    height:56px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:15px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f5f8fa,
+        #e9f1f5
+    );
+
+    box-shadow:
+    0 4px 12px
+    rgba(0,0,0,.08);
+
+}
+
+.card-icon i{
+
+    font-size:24px;
+
+    color:#0b5d73;
+
+}
+
+.card:hover .card-icon{
+
+    transform:
+    translateY(-2px);
+
+    transition:.25s;
 
 }
