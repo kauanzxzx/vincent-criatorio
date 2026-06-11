@@ -795,3 +795,78 @@ td[data-label="Ações"]::before{
     transition:.25s;
 
 }
+
+@media(max-width:768px){
+
+    .cards,
+    .cards-financeiro,
+    .cards-vendas{
+
+        grid-template-columns:
+        repeat(2, 1fr);
+
+        gap:12px;
+
+    }
+
+    .card,
+    .card-fin,
+    .card-venda{
+
+        padding:16px 12px;
+
+        min-height:130px;
+
+    }
+
+    .card h3,
+    .card-fin h3,
+    .card-venda h3{
+
+        font-size:13px;
+
+    }
+
+    .card span,
+    .card-fin span,
+    .card-venda span{
+
+        font-size:24px;
+
+    }
+
+    .card-icon{
+
+        width:42px;
+
+        height:42px;
+
+        font-size:20px;
+
+        margin-bottom:10px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .cards{
+
+        display:grid;
+
+        grid-template-columns:
+        repeat(2, 1fr);
+
+        gap:12px;
+
+    }
+
+    .card-destaque{
+
+        grid-column:
+        1 / -1;
+
+    }
+
+}
