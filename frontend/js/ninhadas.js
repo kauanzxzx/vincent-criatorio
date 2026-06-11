@@ -205,38 +205,63 @@ async function salvarNinhada(){
     );
 
     if(
-        !mae ||
-        !dataParto
-    ){
+    indiceEdicao === null &&
+    !mae
+){
+
+    alert(
+        "Selecione a mãe."
+    );
+
+    return;
+}
+
+    if(!dataParto){
 
         alert(
-            "Preencha todos os campos."
+            "Informe a data do parto."
         );
 
         return;
     }
 
-    const cruzamento =
-    cruzamentos.find(
-        c => c.matrizNome === mae
-    );
+        const cruzamento =
+        cruzamentos.find(
+            c => c.matrizNome === mae
+        );
+
+        const ninhadaEditando =
+        indiceEdicao !== null
+        ?
+        ninhadas[indiceEdicao]
+        :
+        null;
 
     const dados = {
 
         maeId:
-        partoPendente
+        ninhadaEditando
+        ? ninhadaEditando.maeId
+        : partoPendente
         ? partoPendente.maeId
         : cruzamento?.maeId || null,
 
-        mae,
+        mae:
+        ninhadaEditando
+        ? ninhadaEditando.mae
+        : mae,
 
         paiId:
-        partoPendente
+        ninhadaEditando
+        ? ninhadaEditando.paiId
+        : partoPendente
         ? partoPendente.paiId
         : cruzamento?.paiId || null,
 
         pai:
-        partoPendente
+        ninhadaEditando
+        ? ninhadaEditando.pai
+        : partoPendente
         ? partoPendente.pai
         : cruzamento?.reprodutorNome || "",
 
