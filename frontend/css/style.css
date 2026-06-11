@@ -851,6 +851,14 @@ td[data-label="Ações"]::before{
 
 @media(max-width:768px){
 
+    .card{
+        border: solid #0b5d73 0.2px;
+    }
+
+    .card-fin{
+        border: solid #0b5d73 0.2px;
+    }
+
     .cards{
 
         display:grid;
@@ -868,5 +876,26 @@ td[data-label="Ações"]::before{
         1 / -1;
 
     }
+
+    .card-destaque{
+
+    background:
+    linear-gradient(
+        135deg,
+        #0b5d73,
+        #0f7a95
+    );
+
+    color:white;
+
+}
+
+.card-destaque h3,
+.card-destaque span,
+.card-destaque i{
+
+    color: #0b5d73;
+
+}
 
 }
