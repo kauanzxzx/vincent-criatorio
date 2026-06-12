@@ -231,28 +231,6 @@ function gerarAlertas(){
 
     });
 
-    // SEM PESAGEM
-
-    coelhos.forEach(c => {
-
-        const existe =
-        pesagens.some(
-            p =>
-            p.coelho_id === c.id ||
-            p.id === c.id
-        );
-
-        if(!existe){
-
-            alertas.push({
-                titulo:"Sem Pesagem",
-                mensagem:`${c.id} - ${c.nome} ainda não possui pesagens.`
-            });
-
-        }
-
-    });
-
     // PESAGEM ATRASADA
 
     coelhos.forEach(c => {

@@ -849,53 +849,71 @@ td[data-label="Ações"]::before{
 
 }
 
+/* PC: destaque não muda nada */
+.card-destaque{
+
+    background:white;
+
+    color:inherit;
+
+}
+
+/* MOBILE: destaque vira card especial */
 @media(max-width:768px){
 
-    .card{
-        border: solid #0b5d73 0.2px;
-    }
-
-    .card-fin{
-        border: solid #0b5d73 0.2px;
-    }
-
-    .cards{
-
-        display:grid;
-
-        grid-template-columns:
-        repeat(2, 1fr);
-
-        gap:12px;
-
-    }
-
     .card-destaque{
 
-        grid-column:
-        1 / -1;
+        grid-column:1 / -1;
+
+        background:
+        linear-gradient(
+            135deg,
+            #0b5d73,
+            #0f7a95
+        );
+
+        color:white;
+
+        border: none;
+
+        box-shadow:
+        0 6px 18px rgba(11,93,115,.25);
 
     }
 
-    .card-destaque{
+    .card-destaque h3,
+    .card-destaque span,
+    .card-destaque i{
 
-    background:
-    linear-gradient(
-        135deg,
-        #0b5d73,
-        #0f7a95
-    );
+        color:white;
 
-    color:white;
+    }
+
+    .card-destaque .card-icon{
+
+        background:
+        rgba(255,255,255,.18);
+
+        box-shadow:none;
+
+    }
 
 }
 
-.card-destaque h3,
-.card-destaque span,
-.card-destaque i{
+@media(max-width:768px){
 
-    color: #0b5d73;
+    .card-destaque span{
+
+        color:white !important;
+
+    }
 
 }
 
+.card {
+        border: solid #0f7a95 0.1px;
+    }
+
+.card-fin{
+    border: solid #0f7a95 0.1px;
 }
