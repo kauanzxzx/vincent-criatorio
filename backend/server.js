@@ -327,8 +327,6 @@ app.post("/cruzamentos", (req,res)=>{
 
 app.put("/cruzamentos/:id", (req,res)=>{
 
-    console.log("BODY CRUZAMENTO:", req.body);
-
     db.query(
         "UPDATE cruzamentos SET ? WHERE id_cruzamento=?",
         [
@@ -338,9 +336,6 @@ app.put("/cruzamentos/:id", (req,res)=>{
         (erro)=>{
 
             if(erro){
-
-                console.error("ERRO PUT CRUZAMENTOS:", erro);
-
                 return res.status(500).json(erro);
             }
 

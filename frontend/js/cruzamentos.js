@@ -790,15 +790,28 @@ async function salvarRecruza(){
 
     const atualizado = {
 
-        ...cruzamento,
+    ...cruzamento,
 
-        dataRecruza:
-        data,
+    dataCruzamento:
+    String(cruzamento.dataCruzamento)
+    .split("T")[0],
 
-        dataPrevistaRecruza:
-        calcularPrevisaoParto(data)
+    dataPrevista:
+    String(cruzamento.dataPrevista)
+    .split("T")[0],
 
-    };
+    dataRecruza:
+    data,
+
+    dataPrevistaRecruza:
+    calcularPrevisaoParto(data),
+
+    pariu:
+    cruzamento.pariu === true ||
+    cruzamento.pariu === 1 ||
+    cruzamento.pariu === "1"
+
+};
 
     try{
 
