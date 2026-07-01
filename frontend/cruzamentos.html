@@ -119,9 +119,61 @@ onclick="abrirMenu()">
 
         </tbody>
 
-    </table></div>
+        </table></div>
+
+    <div id="modalRecruza" class="modal">
+
+        <div class="modal-content modal-recruza">
+
+            <span
+                class="fechar"
+                onclick="fecharModalRecruza()">
+
+                &times;
+
+            </span>
+
+            <h2>Registrar Recruza</h2>
+
+            <p id="infoRecruza" class="info-recruza"></p>
+
+            <label>Data da Recruza</label>
+
+            <input
+                type="date"
+                id="dataRecruzaModal">
+
+            <div class="modal-acoes">
+
+                <button
+                    class="cancelar"
+                    onclick="fecharModalRecruza()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    class="salvar-recruza"
+                    onclick="salvarRecruza()">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
+
+<script src="js/cruzamentos.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>
 
 <script src="js/cruzamentos.js"></script>
 <script src="js/menu.js"></script>

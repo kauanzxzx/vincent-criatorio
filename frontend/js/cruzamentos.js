@@ -3,6 +3,160 @@ const API = "https://vincent-criatorio.onrender.com";
 let coelhos = [];
 let cruzamentos = [];
 
+let indiceRecruza = null;
+
+// =========================
+// FUNÇÕES AUXILIARES
+// =========================
+
+function dataLocal(data){
+
+    if(!data)
+        return null;
+
+    return new Date(
+        String(data).split("T")[0] + "T00:00:00"
+    );
+
+}
+
+function formatarData(data){
+
+    const d =
+    dataLocal(data);
+
+    if(!d)
+        return "-";
+
+    return d.toLocaleDateString("pt-BR");
+
+}
+
+function jaPariu(valor){
+
+    return (
+        valor === true ||
+        valor === 1 ||
+        valor === "1"
+    );
+
+}
+
+function dataInputHoje(){
+
+    return new Date()
+    .toISOString()
+    .split("T")[0];
+
+}
+
+function calcularParto(data){
+
+    let parto =
+    dataLocal(data);
+
+    parto.setDate(
+        parto.getDate() + 31
+    );
+
+    return parto;
+
+}
+
+function calcularPrevisaoParto(data){
+
+    const parto =
+    calcularParto(data);
+
+    return parto
+    .toISOString()
+    .split("T")[0];
+
+}
+
+function obterPrevisaoAtual(c){
+
+    const hoje =
+    new Date();
+
+    hoje.setHours(
+        0,0,0,0
+    );
+
+    const primeiraCruza =
+    dataLocal(c.dataCruzamento);
+
+    const limitePrimeira =
+    new Date(primeiraCruza);
+
+    limitePrimeira.setDate(
+        limitePrimeira.getDate() + 33
+    );
+
+    const temRecruza =
+    c.dataRecruza &&
+    c.dataPrevistaRecruza;
+
+    if(
+        temRecruza &&
+        hoje > limitePrimeira &&
+        !jaPariu(c.pariu)
+    ){
+
+        return c.dataPrevistaRecruza;
+
+    }
+
+    return c.dataPrevista;
+
+}
+
+function usandoRecruza(c){
+
+    return (
+        obterPrevisaoAtual(c) ===
+        c.dataPrevistaRecruza
+    );
+
+}
+
+function calcularDiasGestacao(c){
+
+    let inicio =
+    c.dataCruzamento;
+
+    if(
+        c.dataRecruza &&
+        usandoRecruza(c)
+    ){
+
+        inicio =
+        c.dataRecruza;
+
+    }
+
+    const hoje =
+    new Date();
+
+    hoje.setHours(
+        0,0,0,0
+    );
+
+    const dataInicio =
+    dataLocal(inicio);
+
+    return Math.floor(
+        (hoje - dataInicio)
+        /
+        86400000
+    );
+
+}
+
+// =========================
+// CARREGAR DADOS
+// =========================
+
 async function carregarDados(){
 
     const respostaCoelhos =
@@ -22,7 +176,12 @@ async function carregarDados(){
     atualizarTabela();
 
     atualizarCards();
+
 }
+
+// =========================
+// SELECTS
+// =========================
 
 function carregarSelects(){
 
@@ -68,17 +227,9 @@ function carregarSelects(){
 
 }
 
-function calcularParto(data){
-
-    let parto =
-    new Date(data);
-
-    parto.setDate(
-        parto.getDate() + 31
-    );
-
-    return parto;
-}
+// =========================
+// SALVAR CRUZAMENTO
+// =========================
 
 async function salvarCruzamento(){
 
@@ -144,6 +295,12 @@ async function salvarCruzamento(){
         parto.toISOString()
         .split("T")[0],
 
+        dataRecruza:
+        null,
+
+        dataPrevistaRecruza:
+        null,
+
         pariu:
         false
 
@@ -182,31 +339,68 @@ async function salvarCruzamento(){
 
 }
 
-function calcularDiasGestacao(data){
+// =========================
+// TABELA
+// =========================
 
-    let inicio =
-    new Date(data);
+function montarPrevisaoParto(item){
 
-    let hoje =
-    new Date();
+    const temRecruza =
+    item.dataRecruza &&
+    item.dataPrevistaRecruza;
 
-    let dias =
-    Math.floor(
-        (hoje - inicio)
-        /
-        86400000
-    );
+    if(!temRecruza){
 
-    return dias;
-}
+        return `
+        <div class="previsao-parto">
 
-function formatarData(data){
+            <span class="previsao-item previsao-vigente">
+                ${formatarData(item.dataPrevista)}
+            </span>
 
-    if(!data)
-        return "-";
+        </div>
+        `;
 
-    return new Date(data)
-    .toLocaleDateString("pt-BR");
+    }
+
+    const recruzaVigente =
+    usandoRecruza(item);
+
+    return `
+    <div class="previsao-parto">
+
+        <span class="previsao-label">
+            1ª cruza
+        </span>
+
+        <span class="previsao-item ${
+            recruzaVigente
+            ? "previsao-descartada"
+            : "previsao-vigente"
+        }">
+            ${formatarData(item.dataPrevista)}
+        </span>
+
+        <span class="previsao-label">
+            Recruza
+        </span>
+
+        <span class="previsao-item ${
+            recruzaVigente
+            ? "previsao-vigente"
+            : ""
+        }">
+            ${formatarData(item.dataPrevistaRecruza)}
+        </span>
+
+        <small class="texto-recruza">
+            Data:
+            ${formatarData(item.dataRecruza)}
+        </small>
+
+    </div>
+    `;
+
 }
 
 function atualizarTabela(){
@@ -221,11 +415,13 @@ function atualizarTabela(){
     cruzamentos.forEach((item,index)=>{
 
         let parto =
-        new Date(item.dataPrevista);
+        dataLocal(
+            obterPrevisaoAtual(item)
+        );
 
         let status;
 
-        if(item.pariu === 1 || item.pariu === true){
+        if(jaPariu(item.pariu)){
 
             status =
             `<span class="status-ok">
@@ -275,15 +471,11 @@ function atualizarTabela(){
             </td>
 
             <td data-label="Dias">
-                ${calcularDiasGestacao(
-                    item.dataCruzamento
-                )} dias
+                ${calcularDiasGestacao(item)} dias
             </td>
 
             <td data-label="Parto">
-                ${formatarData(
-                    item.dataPrevista
-                )}
+                ${montarPrevisaoParto(item)}
             </td>
 
             <td data-label="Status">
@@ -303,8 +495,31 @@ function atualizarTabela(){
                     </button>
 
                     ${
-                        item.pariu === 1 ||
-                        item.pariu === true
+                        !jaPariu(item.pariu)
+                        ?
+                        `
+                        <button
+                        class="recruza ${
+                            item.dataRecruza
+                            ? "recruza-ativa"
+                            : ""
+                        }"
+                        onclick="abrirModalRecruza(${index})">
+
+                            ${
+                                item.dataRecruza
+                                ? "Recruza ✓"
+                                : "Recruza"
+                            }
+
+                        </button>
+                        `
+                        :
+                        ''
+                    }
+
+                    ${
+                        jaPariu(item.pariu)
                         ?
                         `
                         <span class="status-ok">
@@ -333,6 +548,10 @@ function atualizarTabela(){
 
 }
 
+// =========================
+// CARDS
+// =========================
+
 function atualizarCards(){
 
     document.getElementById(
@@ -347,10 +566,16 @@ function atualizarCards(){
     const hoje =
     new Date();
 
+    hoje.setHours(
+        0,0,0,0
+    );
+
     cruzamentos.forEach(c => {
 
         let parto =
-        new Date(c.dataPrevista);
+        dataLocal(
+            obterPrevisaoAtual(c)
+        );
 
         let dias =
         Math.floor(
@@ -359,13 +584,9 @@ function atualizarCards(){
             86400000
         );
 
-        const jaPariu =
-        c.pariu === 1 ||
-        c.pariu === true;
-
         if(
             dias >= 0 &&
-            !jaPariu
+            !jaPariu(c.pariu)
         ){
             prenhas++;
         }
@@ -373,14 +594,15 @@ function atualizarCards(){
         if(
             dias >= 0 &&
             dias <= 7 &&
-            !jaPariu
+            !jaPariu(c.pariu)
         ){
             semana++;
         }
 
         if(
             parto.getMonth() === hoje.getMonth() &&
-            !jaPariu
+            parto.getFullYear() === hoje.getFullYear() &&
+            !jaPariu(c.pariu)
         ){
             mes++;
         }
@@ -401,7 +623,12 @@ function atualizarCards(){
         "partosMes"
     ).textContent =
     mes;
+
 }
+
+// =========================
+// EXCLUIR
+// =========================
 
 async function excluir(index){
 
@@ -433,6 +660,10 @@ async function excluir(index){
     }
 
 }
+
+// =========================
+// MARCAR PARTO
+// =========================
 
 async function marcarParto(index){
 
@@ -492,5 +723,116 @@ async function marcarParto(index){
     }
 
 }
+
+// =========================
+// MODAL RECRUZA
+// =========================
+
+function abrirModalRecruza(index){
+
+    indiceRecruza =
+    index;
+
+    const cruzamento =
+    cruzamentos[index];
+
+    document.getElementById("infoRecruza")
+    .textContent =
+    `${cruzamento.matrizId} - ${cruzamento.matrizNome}`;
+
+    document.getElementById("dataRecruzaModal")
+    .value =
+    cruzamento.dataRecruza
+    ?
+    String(cruzamento.dataRecruza)
+    .split("T")[0]
+    :
+    dataInputHoje();
+
+    document.getElementById("modalRecruza")
+    .style.display =
+    "flex";
+
+}
+
+function fecharModalRecruza(){
+
+    indiceRecruza =
+    null;
+
+    document.getElementById("modalRecruza")
+    .style.display =
+    "none";
+
+}
+
+async function salvarRecruza(){
+
+    if(indiceRecruza === null)
+        return;
+
+    const data =
+    document.getElementById("dataRecruzaModal")
+    .value;
+
+    if(!data){
+
+        alert(
+            "Informe a data da recruza."
+        );
+
+        return;
+
+    }
+
+    const cruzamento =
+    cruzamentos[indiceRecruza];
+
+    const atualizado = {
+
+        ...cruzamento,
+
+        dataRecruza:
+        data,
+
+        dataPrevistaRecruza:
+        calcularPrevisaoParto(data)
+
+    };
+
+    try{
+
+        await fetch(
+            `${API}/cruzamentos/${cruzamento.id_cruzamento}`,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:
+                JSON.stringify(atualizado)
+            }
+        );
+
+        fecharModalRecruza();
+
+        carregarDados();
+
+    }catch(erro){
+
+        console.error(erro);
+
+        alert(
+            "Erro ao salvar recruza."
+        );
+
+    }
+
+}
+
+// =========================
+// INICIALIZAÇÃO
+// =========================
 
 carregarDados();

@@ -342,3 +342,338 @@ td:last-child{
     }
 
 }
+
+.recruza{
+
+    background:#6f42c1;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.recruza:hover{
+
+    filter:brightness(1.08);
+
+}
+
+.texto-recruza{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#6f42c1;
+
+    font-weight:700;
+
+}
+
+
+.recruza{
+
+    background:#6f42c1;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.recruza:hover{
+
+    filter:brightness(1.08);
+
+}
+
+.recruza-ativa{
+
+    background:#5a32a3;
+
+}
+
+.previsao-parto{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+    align-items:center;
+
+}
+
+.previsao-item{
+
+    font-size:13px;
+
+    color:#07384D;
+
+    font-weight:600;
+
+}
+
+.previsao-label{
+
+    font-size:11px;
+
+    color:#666;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.previsao-descartada{
+
+    color:#999;
+
+    text-decoration:line-through;
+
+}
+
+.previsao-vigente{
+
+    color:#198754;
+
+    font-weight:800;
+
+}
+
+.texto-recruza{
+
+    font-size:12px;
+
+    color:#6f42c1;
+
+    font-weight:700;
+
+}
+
+.modal-recruza{
+
+    max-width:420px;
+
+}
+
+.info-recruza{
+
+    background:#f8fafc;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+    color:#07384D;
+
+    font-weight:600;
+
+}
+
+.modal-recruza label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:700;
+
+    color:#07384D;
+
+}
+
+.modal-acoes{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+.cancelar{
+
+    background:#6c757d;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+}
+
+.salvar-recruza{
+
+    background:#198754;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+}
+
+/* ==========================
+   MODAL RECRUZA
+========================== */
+
+#modalRecruza{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    backdrop-filter:blur(3px);
+
+}
+
+.modal-recruza{
+
+    width:100%;
+
+    max-width:430px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+    animation:abrirModal .25s ease;
+
+}
+
+@keyframes abrirModal{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.modal-recruza h2{
+
+    color:#07384D;
+
+    margin-bottom:18px;
+
+}
+
+.modal-recruza label{
+
+    display:block;
+
+    margin:15px 0 8px;
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+.modal-recruza input{
+
+    width:100%;
+
+}
+
+.modal-acoes{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+.modal-acoes button{
+
+    min-width:120px;
+
+}
+
+.info-recruza{
+
+    background:#f7fafc;
+
+    border-left:4px solid #0b5d73;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    color:#555;
+
+}
+
+.fechar{
+
+    float:right;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+    color:#777;
+
+    transition:.2s;
+
+}
+
+.fechar:hover{
+
+    color:#dc3545;
+
+}
