@@ -40,6 +40,8 @@ app.get("/", (req,res)=>{
 
 app.get("/coelhos",(req,res)=>{
 
+    console.log(">>> Entrou na rota /coelhos");
+
     db.query(
 
         "SELECT * FROM coelhos",
