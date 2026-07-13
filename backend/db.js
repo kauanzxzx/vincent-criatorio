@@ -12,7 +12,27 @@ const db = mysql.createPool({
         process.env.MYSQLDATABASE ||
         process.env.MYSQL_DATABASE,
 
-    port: process.env.MYSQLPORT
+    port: process.env.MYSQLPORT,
+
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+
+});
+
+db.getConnection((erro, connection) => {
+
+    if (erro) {
+
+        console.error("ERRO AO CONECTAR NO MYSQL:");
+        console.error(erro);
+
+        return;
+    }
+
+    console.log("Banco conectado com sucesso!");
+
+    connection.release();
 
 });
 
