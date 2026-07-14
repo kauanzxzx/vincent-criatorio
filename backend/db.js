@@ -14,11 +14,16 @@ const db = mysql.createPool({
 
     port: process.env.MYSQLPORT,
 
+    ssl: {
+        rejectUnauthorized: true
+    },
+
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 
 });
+
 
 db.getConnection((erro, connection) => {
 
@@ -35,5 +40,6 @@ db.getConnection((erro, connection) => {
     connection.release();
 
 });
+
 
 module.exports = db;
