@@ -695,6 +695,25 @@ app.post("/vermifugacoes", (req,res)=>{
 const PORT =
 process.env.PORT || 3000;
 
+app.get("/teste-db", (req, res) => {
+
+    db.query("SELECT DATABASE() AS banco", (err, result) => {
+
+        if (err) {
+            console.log("Erro ao consultar banco:");
+            console.log(err);
+
+            return res.status(500).json({
+                erro: err.message
+            });
+        }
+
+        res.json(result);
+
+    });
+
+});
+
 app.listen(PORT, "0.0.0.0", () => {
 
     console.log(
