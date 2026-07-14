@@ -43,18 +43,3 @@ db.getConnection((erro, connection) => {
 
 
 module.exports = db;
-
-const db = require("./db");
-
-db.query("SELECT DATABASE() AS banco", (err, result) => {
-
-    if (err) {
-        console.log("Erro ao consultar banco:");
-        console.log(err);
-        return;
-    }
-
-    console.log("Banco conectado:");
-    console.log(result);
-
-});
