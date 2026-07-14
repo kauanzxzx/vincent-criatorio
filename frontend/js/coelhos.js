@@ -9,7 +9,7 @@ JSON.parse(
 
 let coelhos = [];
 
-let indiceEdicao = null;
+let idEdicao = null;
 
 function ordenarIdade(){
 
@@ -104,25 +104,30 @@ async function salvarCoelho(){
     const arquivo =
     document.getElementById("foto").files[0];
 
+    const coelhoAtual =
+    idEdicao !== null
+    ? coelhos.find(c => c.id == idEdicao)
+    : null;
+
     let foto = "";
 
-    if(arquivo){
+if(arquivo){
 
-        foto =
-        await converterImagemBase64(arquivo);
+    foto =
+    await converterImagemBase64(arquivo);
 
-    }else if(indiceEdicao !== null){
+}else if(coelhoAtual){
 
-        foto =
-        coelhos[indiceEdicao].foto || "";
+    foto =
+    coelhoAtual.foto || "";
 
-    }
+}
 
     const dados = {
 
         id:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].id
+        coelhoAtual
+        ? coelhoAtual.id
         : gerarCodigo(),
 
         nome,
@@ -136,42 +141,42 @@ async function salvarCoelho(){
         foto,
 
         pai:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].pai
+        coelhoAtual
+        ? coelhoAtual.pai
         : filhotePendente
         ? filhotePendente.pai
         : "",
 
         mae:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].mae
+        coelhoAtual
+        ? coelhoAtual.mae
         : filhotePendente
         ? filhotePendente.mae
         : "",
 
         paiId:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].paiId
+        coelhoAtual
+        ? coelhoAtual.paiId
         : filhotePendente
         ? filhotePendente.paiId
         : "",
 
         maeId:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].maeId
+        coelhoAtual
+        ? coelhoAtual.maeId
         : filhotePendente
         ? filhotePendente.maeId
         : "",
 
         peso:
-        indiceEdicao !== null
-        ? coelhos[indiceEdicao].peso
+        coelhoAtual
+        ? coelhoAtual.peso
         : null
     };
 
     try{
 
-        if(indiceEdicao !== null){
+        if(coelhoAtual){
 
             await fetch(
                 `${API}/coelhos/${dados.id}`,
@@ -199,7 +204,7 @@ async function salvarCoelho(){
 
         }
 
-        indiceEdicao = null;
+        idEdicao = null;
 
         localStorage.removeItem("filhotePendente");
 
@@ -520,7 +525,12 @@ async function excluir(id){
 
 function editar(id){
 
-    let coelho = coelhos.find(c => c.id == id);
+    const coelho = coelhos.find(c => c.id == id);
+
+    if(!coelho){
+        alert("Coelho não encontrado.");
+        return;
+    }
 
     document.getElementById("nome").value =
     coelho.nome || "";
@@ -546,7 +556,7 @@ function editar(id){
     document.getElementById("observacoes").value =
     coelho.observacoes || "";
 
-    indiceEdicao = index;
+    idEdicao = id;
 
     window.scrollTo({
         top:0,
@@ -610,6 +620,8 @@ function limparFormulario(){
     document.getElementById("nascimento").value = "";
     document.getElementById("observacoes").value = "";
     document.getElementById("foto").value = "";
+
+    idEdicao = null;
 }
 
 function verHistorico(id){
