@@ -744,3 +744,18 @@ td:nth-child(11){
     border-radius:14px;
     object-fit:contain;
 }
+
+
+.ordenar-idade {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #333395;
+    color: white;
+    font-weight: bold;
+}
+
+.ordenar-idade:hover {
+    opacity: .8;
+}

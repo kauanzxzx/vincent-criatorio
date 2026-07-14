@@ -1,5 +1,7 @@
 const API = "https://vincent-criatorio.onrender.com";
 
+let ordemIdade = 0;
+
 const filhotePendente =
 JSON.parse(
     localStorage.getItem("filhotePendente")
@@ -8,6 +10,41 @@ JSON.parse(
 let coelhos = [];
 
 let indiceEdicao = null;
+
+function ordenarIdade(){
+
+    ordemIdade++;
+
+    if(ordemIdade > 2){
+        ordemIdade = 1;
+    }
+
+    let listaOrdenada = [...coelhos];
+
+
+    listaOrdenada.sort((a,b)=>{
+
+        let idadeA = calcularIdadeMeses(a.nascimento);
+        let idadeB = calcularIdadeMeses(b.nascimento);
+
+
+        return ordemIdade === 1
+        ? idadeA - idadeB
+        : idadeB - idadeA;
+
+    });
+
+
+    atualizarTabela(listaOrdenada);
+
+
+    let seta = document.getElementById("setaIdade");
+
+    if(seta){
+        seta.innerHTML = ordemIdade === 1 ? "↑" : "↓";
+    }
+
+}
 
 function gerarCodigo(){
 
@@ -322,7 +359,8 @@ function atualizarTabela(lista = coelhos){
 
     tabela.innerHTML = "";
 
-    lista.forEach((coelho,index)=>{
+    lista.forEach((coelho)=>{
+
 
         let badgeSexo =
         coelho.sexo === "Macho"
@@ -406,15 +444,15 @@ function atualizarTabela(lista = coelhos){
                         Histórico
                     </button>
 
-                    <button
+                   <button
                     class="editar"
-                    onclick="editar(${index})">
+                    onclick="editar('${coelho.id}')">
                         Editar
                     </button>
 
                     <button
                     class="excluir"
-                    onclick="excluir(${index})">
+                    onclick="excluir('${coelho.id}')">
                         Excluir
                     </button>
 
@@ -457,7 +495,7 @@ function atualizarCards(){
     }).length;
 }
 
-async function excluir(index){
+async function excluir(id){
 
     if(!confirm("Excluir registro?"))
         return;
@@ -465,7 +503,7 @@ async function excluir(index){
     try{
 
         await fetch(
-            `${API}/coelhos/${coelhos[index].id}`,
+            `${API}/coelhos/${id}`,
             {
                 method:"DELETE"
             }
@@ -480,10 +518,9 @@ async function excluir(index){
     }
 }
 
-function editar(index){
+function editar(id){
 
-    const coelho =
-    coelhos[index];
+    let coelho = coelhos.find(c => c.id == id);
 
     document.getElementById("nome").value =
     coelho.nome || "";
@@ -515,6 +552,21 @@ function editar(index){
         top:0,
         behavior:"smooth"
     });
+}
+
+function calcularIdadeMeses(dataNascimento){
+
+    let nascimento = new Date(dataNascimento);
+    let hoje = new Date();
+
+
+    let meses =
+    (hoje.getFullYear() - nascimento.getFullYear()) * 12 +
+    (hoje.getMonth() - nascimento.getMonth());
+
+
+    return meses;
+
 }
 
 function filtrar(){
