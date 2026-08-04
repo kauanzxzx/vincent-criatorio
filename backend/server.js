@@ -546,43 +546,73 @@ app.get("/vendas", (req,res)=>{
 
 app.post("/vendas", (req,res)=>{
 
-    const venda =
-    req.body;
+    console.log("NOVA ROTA POST /vendas");
+
+    const venda = req.body;
 
     db.query(
+
         "INSERT INTO vendas SET ?",
+
         venda,
+
         (erro)=>{
 
             if(erro){
-                return res.status(500).json(erro);
+
+                return res
+                .status(500)
+                .json(erro);
+
             }
 
             db.query(
-                "UPDATE coelhos SET status='Vendido' WHERE id=?",
-                [venda.coelhoId]
+
+                "INSERT INTO financeiro SET ?",
+
+                {
+
+                    data: venda.data,
+
+                    tipo: "Entrada",
+
+                    categoria: "Venda",
+
+                    observacao:
+                    `Venda de Filhote para ${venda.cliente}`,
+
+                    valor: venda.valor
+
+                }
+
             );
 
             db.query(
-                "INSERT INTO financeiro SET ?",
-                {
-                    data:venda.data,
-                    tipo:"Entrada",
-                    categoria:"Venda",
-                    observacao:
-                    `Venda de ${venda.coelhoNome} para ${venda.cliente}`,
-                    valor:venda.valor
-                }
+
+                "UPDATE ninhadas SET vivos = vivos - ? WHERE id_ninhada = ?",
+
+                [
+
+                    venda.quantidade,
+
+                    venda.ninhadaId
+
+                ]
+
             );
 
             res.json({
-                sucesso:true
+
+                sucesso: true
+
             });
 
         }
+
     );
 
 });
+
 
 // ========================
 // CANCELAR VENDA
@@ -590,20 +620,21 @@ app.post("/vendas", (req,res)=>{
 
 app.delete("/vendas/:id", (req,res)=>{
 
-    const idVenda =
-    req.params.id;
+    const idVenda = req.params.id;
 
     db.query(
+
         "SELECT * FROM vendas WHERE id_venda=?",
+
         [idVenda],
+
         (erro,resultados)=>{
 
             if(erro){
                 return res.status(500).json(erro);
             }
 
-            const venda =
-            resultados[0];
+            const venda = resultados[0];
 
             if(!venda){
                 return res.status(404).json({
@@ -612,30 +643,44 @@ app.delete("/vendas/:id", (req,res)=>{
             }
 
             db.query(
+
                 "DELETE FROM vendas WHERE id_venda=?",
+
                 [idVenda],
+
                 (erro)=>{
 
                     if(erro){
                         return res.status(500).json(erro);
                     }
 
+                    // Devolve os filhotes para a ninhada
                     db.query(
-                        "UPDATE coelhos SET status='Ativo' WHERE id=?",
-                        [venda.coelhoId]
+
+                        "UPDATE ninhadas SET vivos = vivos + ? WHERE id_ninhada = ?",
+
+                        [
+                            venda.quantidade,
+                            venda.ninhadaId
+                        ]
+
                     );
 
+                    // Remove o lançamento financeiro
                     db.query(
-                        `DELETE FROM financeiro 
+
+                        `DELETE FROM financeiro
                          WHERE categoria='Venda'
                          AND data=?
                          AND valor=?
                          AND observacao LIKE ?`,
+
                         [
                             venda.data,
                             venda.valor,
-                            `%${venda.coelhoNome}%`
+                            `%${venda.cliente}%`
                         ]
+
                     );
 
                     res.json({
@@ -643,9 +688,11 @@ app.delete("/vendas/:id", (req,res)=>{
                     });
 
                 }
+
             );
 
         }
+
     );
 
 });

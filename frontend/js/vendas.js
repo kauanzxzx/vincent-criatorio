@@ -1,15 +1,15 @@
 const API = "https://vincent-criatorio.onrender.com";
 
-let coelhos = [];
+let ninhadas = [];
 let vendas = [];
 
 async function carregarDados(){
 
-    const respostaCoelhos =
-    await fetch(`${API}/coelhos`);
+    const respostaNinhadas =
+    await fetch(`${API}/ninhadas`);
 
-    coelhos =
-    await respostaCoelhos.json();
+    ninhadas =
+    await respostaNinhadas.json();
 
     const respostaVendas =
     await fetch(`${API}/vendas`);
@@ -17,34 +17,42 @@ async function carregarDados(){
     vendas =
     await respostaVendas.json();
 
-    carregarCoelhos();
+    carregarNinhadas();
 
     atualizarTabela();
 
     atualizarCardsVendas();
 }
 
-function carregarCoelhos(){
+function carregarNinhadas(){
 
     const select =
-    document.getElementById("coelho");
+    document.getElementById("ninhada");
 
     select.innerHTML =
-    "<option value=''>Selecione o Coelho</option>";
+    "<option value=''>Selecione a Ninhada</option>";
 
-    coelhos.forEach(c => {
+    const hoje = new Date();
 
-        if(c.status !== "Vendido"){
+    ninhadas.forEach(n => {
 
-            select.innerHTML += `
+        if(n.desmamada != 1)
+            return;
 
-            <option value="${c.id}">
-                ${c.id} - ${c.nome}
-            </option>
+        if(n.vivos <= 0)
+            return;
 
-            `;
+        select.innerHTML += `
 
-        }
+        <option value="${n.id_ninhada}">
+
+            Ninhada da ${n.mae}
+            | Pai: ${n.pai}
+            | ${n.vivos} filhote(s)
+
+        </option>
+
+        `;
 
     });
 
@@ -52,8 +60,8 @@ function carregarCoelhos(){
 
 async function salvarVenda(){
 
-    const coelhoId =
-    document.getElementById("coelho").value;
+    const ninhadaId =
+    document.getElementById("ninhada").value;
 
     const cliente =
     document.getElementById("cliente").value;
@@ -66,14 +74,20 @@ async function salvarVenda(){
         document.getElementById("valor").value
     );
 
+    const quantidade =
+    Number(
+    document.getElementById("quantidade").value
+    );
+
     const observacao =
     document.getElementById("observacao").value;
 
     if(
-        !coelhoId ||
+        !ninhadaId ||
         !cliente ||
         !data ||
-        !valor
+        !valor ||
+        !quantidade
     ){
 
         alert(
@@ -83,27 +97,39 @@ async function salvarVenda(){
         return;
     }
 
-    const coelho =
-    coelhos.find(
-        c => c.id === coelhoId
+    const ninhada =
+    ninhadas.find(
+        n => n.id_ninhada == ninhadaId
     );
+
+    if(quantidade > ninhada.vivos){
+
+    alert(
+        `Esta ninhada possui apenas ${ninhada.vivos} filhote(s) disponível(is).`
+    );
+
+    return;
+
+}
 
     const dados = {
 
-        data,
+    data,
 
-        cliente,
+    cliente,
 
-        coelhoId,
+    ninhadaId,
 
-        coelhoNome:
-        coelho.nome,
+    ninhadaNome:
+    `${ninhada.mae} × ${ninhada.pai}`,
 
-        valor,
+    quantidade,
 
-        observacao
+    valor,
 
-    };
+    observacao
+
+};
 
     try{
 
@@ -168,12 +194,12 @@ function atualizarTabela(){
                 ${formatarData(v.data)}
             </td>
 
-            <td data-label="Coelho">
-                ${v.coelhoId} - ${v.coelhoNome}
-            </td>
-
             <td data-label="Cliente">
                 ${v.cliente}
+            </td>
+
+            <td data-label="Ninhada">
+                ${v.ninhadaNome}
             </td>
 
             <td data-label="Valor">
@@ -294,11 +320,12 @@ async function excluirVenda(index){
 
 function limparFormulario(){
 
-    document.getElementById("coelho").value = "";
+    document.getElementById("ninhada").value = "";
     document.getElementById("cliente").value = "";
     document.getElementById("dataVenda").value = "";
     document.getElementById("valor").value = "";
     document.getElementById("observacao").value = "";
+    document.getElementById("quantidade").value = 1;
 
 }
 
