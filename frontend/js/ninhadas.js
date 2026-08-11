@@ -450,51 +450,81 @@ function atualizarTabela(){
 
             <td data-label="Ações">
 
-                <div class="acoes">
+    <div class="acoes">
 
-                    ${
-                        !desmamada
-                        ?
-                        `
-                        <button
-                            class="editar"
-                            onclick="desmamar(${index})">
+        ${
+            n.vendida
+            ?
+            `
+            <span class="ninhada-vendida">
+                ✓ Ninhada Vendida
+            </span>
+            `
+            :
+            `
 
-                            Desmamar
+            ${
+                !desmamada
+                ?
+                `
+                <button
+                    class="editar"
+                    onclick="desmamar(${index})">
 
-                        </button>
-                        `
-                        :
-                        ''
-                    }
+                    Desmamar
 
-                    <button
-                        class="filhote"
-                        onclick="gerarFilhote(${index})">
+                </button>
+                `
+                :
+                ''
+            }
 
-                        Gerar Filhote
+            <button
+                class="filhote"
+                onclick="gerarFilhote(${index})">
 
-                    </button>
+                Gerar Filhote
 
-                    <button
-                        class="editar"
-                        onclick="editar(${index})">
+            </button>
 
-                        Editar
+            <button
+                class="editar"
+                onclick="editar(${index})">
 
-                    </button>
+                Editar
 
-                    <button
-                        class="excluir"
-                        onclick="excluir(${index})">
+            </button>
 
-                        Excluir
+            <button
+                class="excluir"
+                onclick="excluir(${index})">
 
-                    </button>
+                Excluir
 
-                </div>
+            </button>
 
-            </td>
+            ${
+                desmamada
+                ?
+                `
+                <button
+                    class="vendidos"
+                    onclick="marcarNinhadaVendida(${n.id_ninhada})">
+
+                    Vendidos
+
+                </button>
+                `
+                :
+                ''
+            }
+
+            `
+        }
+
+    </div>
+
+</td>
 
         </tr>
 
@@ -536,6 +566,36 @@ function atualizarCards(){
         (s,n)=>s+Number(n.mortos),
         0
     );
+}
+
+async function marcarNinhadaVendida(idNinhada){
+
+    if(!confirm("Marcar esta ninhada como vendida?"))
+        return;
+
+    try{
+
+        const resposta = await fetch(
+            `${API}/ninhadas/${idNinhada}/vendida`,
+            {
+                method:"PUT"
+            }
+        );
+
+        if(!resposta.ok){
+            throw new Error("Erro ao marcar ninhada.");
+        }
+
+        carregarDados();
+
+    }catch(erro){
+
+        console.error(erro);
+
+        alert("Erro ao marcar ninhada como vendida.");
+
+    }
+
 }
 
 // =========================

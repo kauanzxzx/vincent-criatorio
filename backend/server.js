@@ -697,6 +697,42 @@ app.delete("/vendas/:id", (req,res)=>{
 
 });
 
+// ========================
+// MARCAR NINHADA COMO VENDIDA
+// ========================
+
+app.put("/ninhadas/:id/vendida", (req,res)=>{
+
+    const idNinhada = req.params.id;
+
+    db.query(
+
+        `UPDATE ninhadas
+         SET vendida = 1
+         WHERE id_ninhada = ?`,
+
+        [idNinhada],
+
+        (erro)=>{
+
+            if(erro){
+
+                return res
+                .status(500)
+                .json(erro);
+
+            }
+
+            res.json({
+                sucesso:true
+            });
+
+        }
+
+    );
+
+});
+
 
 // ========================
 // LISTAR VERMIFUGAÇÕES
