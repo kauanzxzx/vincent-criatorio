@@ -587,20 +587,6 @@ app.post("/vendas", (req,res)=>{
 
             );
 
-            db.query(
-
-                "UPDATE ninhadas SET vivos = vivos - ? WHERE id_ninhada = ?",
-
-                [
-
-                    venda.quantidade,
-
-                    venda.ninhadaId
-
-                ]
-
-            );
-
             res.json({
 
                 sucesso: true
@@ -653,18 +639,6 @@ app.delete("/vendas/:id", (req,res)=>{
                     if(erro){
                         return res.status(500).json(erro);
                     }
-
-                    // Devolve os filhotes para a ninhada
-                    db.query(
-
-                        "UPDATE ninhadas SET vivos = vivos + ? WHERE id_ninhada = ?",
-
-                        [
-                            venda.quantidade,
-                            venda.ninhadaId
-                        ]
-
-                    );
 
                     // Remove o lançamento financeiro
                     db.query(

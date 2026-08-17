@@ -42,6 +42,9 @@ function carregarNinhadas(){
         if(n.vivos <= 0)
             return;
 
+        if(n.vendida == 1)
+        return;
+
         select.innerHTML += `
 
         <option value="${n.id_ninhada}">
