@@ -1,6 +1,6 @@
 const API = "https://vincent-criatorio.onrender.com";
 
-const partoPendente =
+let partoPendente =
 JSON.parse(
     localStorage.getItem("partoPendente")
 );
@@ -144,6 +144,54 @@ async function carregarDados(){
 
     atualizarCards();
 
+    // veio de "Pariu" em Cruzamentos: já abre o registro do parto
+    if(partoPendente && !partoAberto){
+
+        partoAberto = true;
+
+        abrirCadastroNinhada();
+
+    }
+
+}
+
+// =========================
+// POP-UP CADASTRO / EDIÇÃO
+// =========================
+
+let partoAberto = false;
+
+function abrirCadastroNinhada(){
+
+    indiceEdicao = null;
+
+    limparFormulario();
+
+    const mae =
+    document.getElementById("mae");
+
+    mae.disabled = false;
+
+    mae.value =
+    partoPendente
+    ? partoPendente.mae
+    : "";
+
+    if(partoPendente){
+
+        document.getElementById("dataParto").value =
+        hojeLocal();
+
+    }
+
+    document.getElementById("titulo-modalNinhada").textContent =
+    "Registrar Parto";
+
+    document.getElementById("btnSalvarNinhada").textContent =
+    "Registrar";
+
+    abrirModal("modalNinhada");
+
 }
 
 // =========================
@@ -281,6 +329,8 @@ async function salvarNinhada(){
 
     };
 
+    definirCarregando("btnSalvarNinhada", true);
+
     try{
 
         if(indiceEdicao !== null){
@@ -319,7 +369,13 @@ async function salvarNinhada(){
                 "partoPendente"
             );
 
+            partoPendente = null;
+
         }
+
+        definirCarregando("btnSalvarNinhada", false);
+
+        fecharModal("modalNinhada");
 
         limparFormulario();
 
@@ -328,6 +384,8 @@ async function salvarNinhada(){
     }catch(erro){
 
         console.error(erro);
+
+        definirCarregando("btnSalvarNinhada", false);
 
         alert(
             "Erro ao salvar ninhada."
@@ -627,10 +685,16 @@ function editar(index){
 
     indiceEdicao = index;
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    // a mãe não muda na edição (o registro mantém a original)
+    document.getElementById("mae").disabled = true;
+
+    document.getElementById("titulo-modalNinhada").textContent =
+    `Editar ninhada de ${ninhada.mae}`;
+
+    document.getElementById("btnSalvarNinhada").textContent =
+    "Salvar alterações";
+
+    abrirModal("modalNinhada");
 }
 
 // =========================

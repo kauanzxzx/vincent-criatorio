@@ -2,7 +2,7 @@ const API = "https://vincent-criatorio.onrender.com";
 
 let ordemIdade = 0;
 
-const filhotePendente =
+let filhotePendente =
 JSON.parse(
     localStorage.getItem("filhotePendente")
 );
@@ -82,7 +82,84 @@ async function carregarCoelhos(){
     atualizarTabela();
 
     atualizarCards();
+
+    if(filhotePendente && !filhoteAberto){
+
+        filhoteAberto = true;
+
+        abrirCadastroCoelho();
+
+    }
 }
+
+// =========================
+// POP-UP CADASTRO / EDIÇÃO
+// =========================
+
+let filhoteAberto = false;
+
+function abrirCadastroCoelho(){
+
+    limparFormulario();
+
+    document.getElementById("titulo-modalCoelho").textContent =
+    "Cadastrar Coelho";
+
+    document.getElementById("btnSalvarCoelho").textContent =
+    "Cadastrar";
+
+    const aviso =
+    document.getElementById("avisoFilhote");
+
+    if(filhotePendente){
+
+        aviso.textContent =
+        `Filhote de ${filhotePendente.mae || "-"} × ${filhotePendente.pai || "-"}`;
+
+        aviso.hidden = false;
+
+    }else{
+
+        aviso.hidden = true;
+
+    }
+
+    abrirModal("modalCoelho");
+}
+
+function mostrarPreviewFoto(src){
+
+    const preview =
+    document.getElementById("previewFoto");
+
+    if(src){
+        preview.src = src;
+        preview.hidden = false;
+    }else{
+        preview.removeAttribute("src");
+        preview.hidden = true;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const inputFoto =
+    document.getElementById("foto");
+
+    if(!inputFoto)
+        return;
+
+    inputFoto.addEventListener("change", () => {
+
+        const arquivo =
+        inputFoto.files[0];
+
+        if(arquivo)
+            mostrarPreviewFoto(URL.createObjectURL(arquivo));
+
+    });
+
+});
 
 async function salvarCoelho(){
 
@@ -174,6 +251,8 @@ if(arquivo){
         : null
     };
 
+    definirCarregando("btnSalvarCoelho", true);
+
     try{
 
         if(coelhoAtual){
@@ -208,6 +287,12 @@ if(arquivo){
 
         localStorage.removeItem("filhotePendente");
 
+        filhotePendente = null;
+
+        definirCarregando("btnSalvarCoelho", false);
+
+        fecharModal("modalCoelho");
+
         limparFormulario();
 
         carregarCoelhos();
@@ -215,6 +300,9 @@ if(arquivo){
     }catch(erro){
 
         console.error(erro);
+
+        definirCarregando("btnSalvarCoelho", false);
+
         alert("Erro ao salvar coelho.");
     }
 }
@@ -556,12 +644,21 @@ function editar(id){
     document.getElementById("observacoes").value =
     coelho.observacoes || "";
 
+    document.getElementById("foto").value = "";
+
+    mostrarPreviewFoto(coelho.foto || "");
+
     idEdicao = id;
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    document.getElementById("titulo-modalCoelho").textContent =
+    `Editar ${coelho.id} - ${coelho.nome}`;
+
+    document.getElementById("btnSalvarCoelho").textContent =
+    "Salvar alterações";
+
+    document.getElementById("avisoFilhote").hidden = true;
+
+    abrirModal("modalCoelho");
 }
 
 function calcularIdadeMeses(dataNascimento){
@@ -618,8 +715,11 @@ function limparFormulario(){
     document.getElementById("pelagem").value = "";
     document.getElementById("padrao").value = "";
     document.getElementById("nascimento").value = "";
+    document.getElementById("status").value = "Ativo";
     document.getElementById("observacoes").value = "";
     document.getElementById("foto").value = "";
+
+    mostrarPreviewFoto("");
 
     idEdicao = null;
 }

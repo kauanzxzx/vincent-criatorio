@@ -1,679 +1,177 @@
 /* ==================================
-   FORMULÁRIO
+   CRUZAMENTOS — específico da página
 ================================== */
 
-.formulario{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(240px,1fr));
-
-    gap:18px;
-
-    margin-bottom:25px;
+.tabela-container table{
+    min-width:980px;
 }
 
-.formulario input,
-.formulario select{
-
-    height:48px;
-
-    padding:12px;
-
-    border:1px solid #d1d5db;
-
-    border-radius:10px;
-
-    font-size:14px;
-
-    transition:.25s;
+/* Badges da matriz/reprodutor com ID + nome em duas linhas */
+td .badge-macho,
+td .badge-femea{
+    flex-direction:column;
+    gap:0;
+    line-height:1.3;
+    padding:6px 14px;
+    border-radius:14px;
+    white-space:normal;
 }
 
-.formulario input:focus,
-.formulario select:focus{
-
-    outline:none;
-
-    border-color:#0A4E69;
-
-    box-shadow:
-    0 0 0 4px rgba(10,78,105,.12);
-}
-
-.formulario button{
-
-    height:48px;
-
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
+td[data-label="Dias"]{
     font-weight:600;
-
-    color:white;
-
-    background:
-    linear-gradient(
-        135deg,
-        #0A4E69,
-        #07384D
-    );
-
-    transition:.25s;
+    color:var(--azul-secundario);
+    font-variant-numeric:tabular-nums;
 }
 
-.formulario button:hover{
-
-    transform:
-    translateY(-2px);
-
-    box-shadow:
-    0 8px 18px rgba(7,56,77,.25);
-}
-
-/* ==================================
-   TABELA
-================================== */
-
-table{
-
-    width:100%;
-
-    background:white;
-
-    border-collapse:collapse;
-
-    border-radius:16px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 8px 24px rgba(0,0,0,.06);
-}
-
-thead{
-
-    background:
-    linear-gradient(
-        135deg,
-        #07384D,
-        #0A4E69
-    );
-
-    color:white;
-}
-
-th{
-
-    padding:16px 12px;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    text-transform:uppercase;
-
-    letter-spacing:.4px;
-}
-
-td{
-
-    padding:14px 12px;
-
-    text-align:center;
-
-    border-bottom:1px solid #edf2f7;
-
-    vertical-align:middle;
-}
-
-tbody tr{
-
-    transition:.2s;
-}
-
-tbody tr:hover{
-
-    background:#f8fafc;
-}
-
-/* ==================================
-   COLUNA AÇÕES
-================================== */
-
-th:last-child,
-td:last-child{
-
-    min-width:220px;
-}
-
-.acoes{
-
+/* Previsão de parto */
+.previsao-parto{
     display:flex;
-
-    justify-content:center;
-
+    flex-direction:column;
     align-items:center;
-
-    flex-wrap:wrap;
-
-    gap:8px;
+    gap:3px;
 }
 
-/* ==================================
-   BOTÃO PARTO
-================================== */
-
-.parto{
-
-    background:
-    linear-gradient(
-        135deg,
-        #0d6efd,
-        #0a58ca
-    );
-
-    color:white;
-
-    border:none;
-
-    padding:8px 14px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-size:13px;
-
+.previsao-item{
+    font-size:13.5px;
     font-weight:600;
-
-    transition:.2s;
+    color:var(--azul-principal);
+    font-variant-numeric:tabular-nums;
 }
 
-.parto:hover{
-
-    transform:
-    translateY(-1px);
-
-    box-shadow:
-    0 4px 10px rgba(13,110,253,.25);
+.previsao-label{
+    margin-top:4px;
+    font-size:10.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    color:var(--texto-fraco);
 }
 
-/* ==================================
-   BOTÃO EXCLUIR
-================================== */
-
-.excluir{
-
-    background:
-    linear-gradient(
-        135deg,
-        #dc3545,
-        #b91c1c
-    );
-
-    color:white;
-
-    border:none;
-
-    padding:8px 14px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    transition:.2s;
+.previsao-label:first-child{
+    margin-top:0;
 }
 
-.excluir:hover{
-
-    transform:
-    translateY(-1px);
-
-    box-shadow:
-    0 4px 10px rgba(220,53,69,.25);
+.previsao-descartada{
+    color:var(--texto-fraco);
+    text-decoration:line-through;
 }
 
-/* ==================================
-   BADGES DE STATUS
-================================== */
-
-.status-ok{
-
-    display:inline-block;
-
-    padding:6px 14px;
-
-    border-radius:999px;
-
-    background:#dcfce7;
-
+.previsao-vigente{
     color:#15803d;
-
-    font-size:12px;
-
     font-weight:700;
-
-    text-transform:uppercase;
-
-    letter-spacing:.3px;
 }
 
-.status-pendente{
+.texto-recruza{
+    display:block;
+    margin-top:4px;
+    font-size:11.5px;
+    font-weight:650;
+    color:var(--roxo);
+}
 
-    display:inline-block;
+/* Modal recruza */
+.modal-recruza{
+    width:440px;
+}
 
-    padding:6px 14px;
+.info-recruza{
+    padding:12px 16px;
+    margin-bottom:6px;
+    border-radius:14px;
+    font-weight:600;
+    color:var(--azul-principal);
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(255,255,255,.9);
+    border-left:3px solid var(--roxo);
+}
 
-    border-radius:999px;
+.modal-recruza label{
+    display:block;
+    margin:16px 0 8px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--texto-suave);
+}
 
-    background:#fef3c7;
+.modal-acoes{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:24px;
+}
 
-    color:#b45309;
+.modal-acoes button{
+    height:42px;
+    min-width:120px;
+    font-size:14px;
+}
 
-    font-size:12px;
+.modal-acoes .salvar-recruza{
+    color:white;
+    background:var(--gradiente-marca);
+    border-color:rgba(255,255,255,.25);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 20px rgba(7,56,77,.25);
+}
 
-    font-weight:700;
+@media(max-width:768px){
 
-    text-transform:uppercase;
+    .previsao-parto{
+        align-items:flex-start;
+    }
 
-    letter-spacing:.3px;
+    td .badge-macho,
+    td .badge-femea{
+        align-items:flex-start;
+    }
+
+    .modal-acoes button{
+        flex:1;
+    }
+}
+
+/* Pop-up de recruza mantém o rodapé simples */
+.modal-recruza .modal-acoes{
+    padding:0;
+    margin-top:24px;
+    border:none;
+    background:none;
 }
 
 /* ==================================
-   BADGES DE ANIMAIS
-================================== */
-
-.badge-macho{
-
-    display:inline-block;
-
-    padding:6px 12px;
-
-    border-radius:999px;
-
-    background:#dbeafe;
-
-    color:#1d4ed8;
-
-    font-size:12px;
-
-    font-weight:700;
-}
-
-.badge-femea{
-
-    display:inline-block;
-
-    padding:6px 12px;
-
-    border-radius:999px;
-
-    background:#fce7f3;
-
-    color:#be185d;
-
-    font-size:12px;
-
-    font-weight:700;
-}
-
-/* ==================================
-   RESPONSIVO
+   CELULAR — cartões de cruzamento
 ================================== */
 
 @media(max-width:768px){
 
-    .acoes{
-
-        flex-direction:column;
+    /* Mãe × Pai lado a lado no topo do cartão */
+    .tabela-compacta td[data-label="Mãe"],
+    .tabela-compacta td[data-label="Pai"]{
+        padding-bottom:12px !important;
+        border-bottom:1px solid var(--vidro-linha) !important;
     }
 
-    table{
+    .tabela-compacta td[data-label="Mãe"]::before,
+    .tabela-compacta td[data-label="Pai"]::before{
+        content:attr(data-label);
+    }
 
+    .tabela-compacta td .badge-macho,
+    .tabela-compacta td .badge-femea{
+        width:100%;
+        align-items:flex-start;
         font-size:13px;
+        padding:8px 12px;
     }
 
-}
-
-.recruza{
-
-    background:#6f42c1;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 12px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-}
-
-.recruza:hover{
-
-    filter:brightness(1.08);
-
-}
-
-.texto-recruza{
-
-    display:block;
-
-    margin-top:5px;
-
-    color:#6f42c1;
-
-    font-weight:700;
-
-}
-
-
-.recruza{
-
-    background:#6f42c1;
-
-    color:white;
-
-    border:none;
-
-    padding:8px 12px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-}
-
-.recruza:hover{
-
-    filter:brightness(1.08);
-
-}
-
-.recruza-ativa{
-
-    background:#5a32a3;
-
-}
-
-.previsao-parto{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:6px;
-
-    align-items:center;
-
-}
-
-.previsao-item{
-
-    font-size:13px;
-
-    color:#07384D;
-
-    font-weight:600;
-
-}
-
-.previsao-label{
-
-    font-size:11px;
-
-    color:#666;
-
-    font-weight:700;
-
-    text-transform:uppercase;
-
-}
-
-.previsao-descartada{
-
-    color:#999;
-
-    text-decoration:line-through;
-
-}
-
-.previsao-vigente{
-
-    color:#198754;
-
-    font-weight:800;
-
-}
-
-.texto-recruza{
-
-    font-size:12px;
-
-    color:#6f42c1;
-
-    font-weight:700;
-
-}
-
-.modal-recruza{
-
-    max-width:420px;
-
-}
-
-.info-recruza{
-
-    background:#f8fafc;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    margin-bottom:15px;
-
-    color:#07384D;
-
-    font-weight:600;
-
-}
-
-.modal-recruza label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-weight:700;
-
-    color:#07384D;
-
-}
-
-.modal-acoes{
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    gap:10px;
-
-    margin-top:20px;
-
-}
-
-.cancelar{
-
-    background:#6c757d;
-
-    color:white;
-
-    padding:10px 16px;
-
-    border-radius:8px;
-
-}
-
-.salvar-recruza{
-
-    background:#198754;
-
-    color:white;
-
-    padding:10px 16px;
-
-    border-radius:8px;
-
-}
-
-/* ==========================
-   MODAL RECRUZA
-========================== */
-
-#modalRecruza{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:9999;
-
-    backdrop-filter:blur(3px);
-
-}
-
-.modal-recruza{
-
-    width:100%;
-
-    max-width:430px;
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:25px;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-
-    animation:abrirModal .25s ease;
-
-}
-
-@keyframes abrirModal{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(-20px);
-
+    .tabela-compacta td[data-label="Dias"]{
+        font-size:15px;
     }
 
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
+    .tabela-compacta .previsao-item{
+        font-size:14px;
     }
 
-}
-
-.modal-recruza h2{
-
-    color:#07384D;
-
-    margin-bottom:18px;
-
-}
-
-.modal-recruza label{
-
-    display:block;
-
-    margin:15px 0 8px;
-
-    font-weight:600;
-
-    color:#555;
-
-}
-
-.modal-recruza input{
-
-    width:100%;
-
-}
-
-.modal-acoes{
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    gap:10px;
-
-    margin-top:25px;
-
-}
-
-.modal-acoes button{
-
-    min-width:120px;
-
-}
-
-.info-recruza{
-
-    background:#f7fafc;
-
-    border-left:4px solid #0b5d73;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    color:#555;
-
-}
-
-.fechar{
-
-    float:right;
-
-    font-size:26px;
-
-    cursor:pointer;
-
-    color:#777;
-
-    transition:.2s;
-
-}
-
-.fechar:hover{
-
-    color:#dc3545;
-
+    .tabela-compacta td[data-label="Data Cruzamento"]::before{
+        content:"Cruzamento";
+    }
 }

@@ -28,6 +28,17 @@ async function carregarFinanceiro(){
 
 }
 
+function abrirLancamento(){
+
+    limparFormulario();
+
+    document.getElementById("data").value =
+    hojeLocal();
+
+    abrirModal("modalLancamento");
+
+}
+
 async function adicionarLancamento(){
 
     const data =
@@ -70,6 +81,8 @@ async function adicionarLancamento(){
 
     };
 
+    definirCarregando("btnSalvarLancamento", true);
+
     try{
 
         await fetch(
@@ -85,6 +98,10 @@ async function adicionarLancamento(){
             }
         );
 
+        definirCarregando("btnSalvarLancamento", false);
+
+        fecharModal("modalLancamento");
+
         limparFormulario();
 
         carregarFinanceiro();
@@ -92,6 +109,8 @@ async function adicionarLancamento(){
     }catch(erro){
 
         console.error(erro);
+
+        definirCarregando("btnSalvarLancamento", false);
 
         alert(
             "Erro ao salvar lançamento."

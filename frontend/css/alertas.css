@@ -1,154 +1,55 @@
 /* ==================================
-   CONTAINER DE ALERTAS
+   CENTRAL DE ALERTAS — específico da página
 ================================== */
+
+.cards{
+    grid-template-columns:repeat(auto-fit,minmax(220px,320px));
+}
 
 #listaAlertas{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:12px;
+    margin-bottom:22px;
 }
 
-/* ==================================
-   ALERTA PADRÃO
-================================== */
-
-.alerta{
-
-    background:white;
-
-    border-left:5px solid #f39c12;
-
-    padding:18px;
-
-    border-radius:14px;
-
-    box-shadow:
-    0 4px 15px rgba(0,0,0,.08);
-
-    transition:.25s;
+#listaAlertas .alerta{
+    margin-bottom:0;
+    padding:18px 18px 18px 24px;
+    -webkit-backdrop-filter:var(--vidro-blur);
+    backdrop-filter:var(--vidro-blur);
 }
 
-.alerta:hover{
-
-    transform:
-    translateY(-2px);
-
-    box-shadow:
-    0 8px 22px rgba(0,0,0,.12);
+#listaAlertas .alerta::before{
+    left:10px;
+    top:16px;
+    bottom:16px;
 }
 
-/* ==================================
-   TÍTULO
-================================== */
-
-.alerta h3{
-
-    margin:0 0 8px 0;
-
-    color:#07384D;
-
-    font-size:17px;
-
-    font-weight:700;
+#listaAlertas .alerta h3{
+    font-size:15px;
+    margin-bottom:4px;
 }
 
-/* ==================================
-   TEXTO
-================================== */
-
-.alerta p{
-
-    margin:0;
-
-    color:#555;
-
-    line-height:1.5;
-
-    font-size:14px;
-}
-
-/* ==================================
-   ALERTAS AMARELOS
-================================== */
-
-.alerta-pendente{
-
-    border-left:5px solid #f39c12;
-
-    background:#fffaf0;
-}
-
-/* ==================================
-   ALERTAS VERMELHOS
-================================== */
-
-.alerta-critico{
-
-    border-left:5px solid #dc3545;
-
-    background:#fff1f2;
-}
-
-.alerta-critico h3{
-
-    color:#b91c1c;
-}
-
-/* ==================================
-   ALERTAS VERDES
-================================== */
-
-.alerta-sucesso{
-
-    border-left:5px solid #198754;
-
-    background:#f0fdf4;
-}
-
-.alerta-sucesso h3{
-
-    color:#15803d;
-}
-
-/* ==================================
-   ALERTA "TUDO CERTO"
-================================== */
-
-.alerta-ok{
-
+/* "Tudo certo" ocupa a largura toda */
+#listaAlertas .alerta-ok{
+    grid-column:1 / -1;
+    padding:32px;
     text-align:center;
-
-    padding:25px;
-
-    background:#f0fdf4;
-
-    border-left:5px solid #22c55e;
 }
 
-.alerta-ok h3{
-
-    color:#15803d;
-
-    margin-bottom:10px;
+#listaAlertas .alerta-ok::before{
+    display:none;
 }
 
-.alerta-ok p{
+@media(max-width:768px){
 
-    color:#166534;
-}
+    .cards{
+        grid-template-columns:1fr;
+    }
 
-/* ==================================
-   CONTADOR DE ALERTAS
-================================== */
-
-#totalAlertas{
-
-    font-size:34px;
-
-    font-weight:700;
-
-    color:#07384D;
+    #listaAlertas{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
 }

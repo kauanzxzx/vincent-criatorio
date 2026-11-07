@@ -8,48 +8,71 @@
 
     <title>Coelhos</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/coelhos.css">
-    <link rel="stylesheet" href="css/style.css">
+
     
 
     <link rel="icon" href="/favicon.ico">
-
-    <link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 
 <body>
 
     <button
-class="menu-mobile"
-id="btnMenu"
-onclick="abrirMenu()">
+    class="menu-mobile"
+    id="btnMenu"
+    onclick="abrirMenu()">
 
-    ☰
+    <i class="bi bi-list"></i>
 
 </button>
 
-    <div class="sidebar">
+    <nav class="sidebar">
 
-        <h2>Vincent Criatório</h2>
+    <h2>
+        <img src="favicon.ico" alt="">
+        <span>Vincent Criatório<small>Gestão de Cunicultura</small></span>
+    </h2>
 
-        <ul>
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="coelhos.html">Coelhos</a></li>
-            <li><a href="cruzamentos.html">Cruzamentos</a></li>
-            <li><a href="ninhadas.html">Ninhadas</a></li>
-            <li><a href="pesagens.html">Pesagens</a></li> 
-            <li><a href="agenda-sanitaria.html">Agenda Sanitária</a></li>
-            <li><a href="alertas.html">Alertas</a></li>
-            <li><a href="financeiro.html">Financeiro</a></li>
-        </ul>
+    <ul>
+        <li><a href="index.html"><i class="bi bi-grid-1x2"></i>Dashboard</a></li>
+        <li><a href="coelhos.html"><i class="bi bi-collection"></i>Coelhos</a></li>
+        <li><a href="cruzamentos.html"><i class="bi bi-intersect"></i>Cruzamentos</a></li>
+        <li><a href="ninhadas.html"><i class="bi bi-house-heart"></i>Ninhadas</a></li>
+        <li><a href="pesagens.html"><i class="bi bi-speedometer2"></i>Pesagens</a></li>
+        <li><a href="agenda-sanitaria.html"><i class="bi bi-capsule"></i>Agenda Sanitária</a></li>
+        <li><a href="alertas.html"><i class="bi bi-bell"></i>Alertas</a></li>
+        <li><a href="vendas.html"><i class="bi bi-bag-check"></i>Vendas</a></li>
+        <li><a href="financeiro.html"><i class="bi bi-wallet2"></i>Financeiro</a></li>
+    </ul>
 
-    </div>
+</nav>
 
     <div class="content">
 
+        <div class="cabecalho-pagina">
+
         <h1>Cadastro de Coelhos</h1>
+
+        <button
+            type="button"
+            class="btn-principal"
+            onclick="abrirCadastroCoelho()">
+
+            <i class="bi bi-plus-lg"></i>
+            Cadastrar Coelho
+
+        </button>
+
+    </div>
 
         <div class="cards">
 
@@ -84,62 +107,6 @@ onclick="abrirMenu()">
                 <h3>Filhotes</h3>
                 <span id="totalFilhotes">0</span>
             </div>
-
-        </div>
-
-        <div class="formulario">
-
-            <input type="text" id="nome" placeholder="Nome">
-
-            <select id="sexo">
-                <option value="">Sexo</option>
-                <option>Macho</option>
-                <option>Fêmea</option>
-            </select>
-
-            <select id="raca" placeholder="Raça">
-                <option value="">Raça</option>
-                <option>Netherland</option>
-                <option>Mini Lop</option>
-                <option>Lion Head</option>
-                <option>Teddy Dwerg</option>
-            </select>
-
-            <input type="text" id="pelagem" placeholder="Pelagem">
-
-            <select id="padrao" placeholder="Padrão">
-                <option value="">Padrão</option>
-                <option>Show</option>
-                <option>Pet</option>
-                <option>Meio Termo</option>
-            </select>
-            
-
-            <input type="date" id="nascimento">
-
-            <select id="status">
-                <option>Ativo</option>
-                <option>Vendido</option>
-                <option>Óbito</option>
-            </select>
-
-            <div class="form-group">
-                <textarea
-                    id="observacoes"
-                    placeholder="Observações do animal">
-                </textarea>
-            </div>
-
-            <div class="form-group">
-                <input
-                type="file"
-                id="foto"
-                accept="image/*">
-            </div>
-
-                <button onclick="salvarCoelho()">
-                         Salvar
-                </button>
 
         </div>
 
@@ -234,7 +201,133 @@ onclick="abrirMenu()">
 
 </div>
 
-    <script src="js/coelhos.js"></script>
+    
+<div
+    id="modalCoelho"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="titulo-modalCoelho">
+
+    <div class="modal-content modal-form">
+
+        <div class="modal-topo">
+
+            <h2 id="titulo-modalCoelho">Cadastrar Coelho</h2>
+
+            <button
+                type="button"
+                class="fechar-modal"
+                aria-label="Fechar"
+                onclick="fecharModal('modalCoelho')">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+        <p id="avisoFilhote" class="modal-aviso" hidden></p>
+
+        <div class="formulario">
+
+                <label class="campo">
+                    <span>Nome *</span>
+                    <input type="text" id="nome" placeholder="Ex.: Luna" autocomplete="off">
+                </label>
+
+                <label class="campo">
+                    <span>Sexo *</span>
+                    <select id="sexo">
+                        <option value="">Selecione</option>
+                        <option>Macho</option>
+                        <option>Fêmea</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Raça</span>
+                    <select id="raca">
+                        <option value="">Selecione</option>
+                        <option>Netherland</option>
+                        <option>Mini Lop</option>
+                        <option>Lion Head</option>
+                        <option>Teddy Dwerg</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Pelagem</span>
+                    <input type="text" id="pelagem" placeholder="Ex.: Sable">
+                </label>
+
+                <label class="campo">
+                    <span>Padrão</span>
+                    <select id="padrao">
+                        <option value="">Selecione</option>
+                        <option>Show</option>
+                        <option>Pet</option>
+                        <option>Meio Termo</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Nascimento *</span>
+                    <input type="date" id="nascimento">
+                </label>
+
+                <label class="campo">
+                    <span>Status</span>
+                    <select id="status">
+                        <option>Ativo</option>
+                        <option>Vendido</option>
+                        <option>Óbito</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Foto</span>
+                    <div class="campo-foto">
+                        <img id="previewFoto" class="preview-foto" alt="" hidden>
+                        <input type="file" id="foto" accept="image/*">
+                    </div>
+                </label>
+
+                <label class="campo campo-cheio">
+                    <span>Observações</span>
+                    <textarea id="observacoes" rows="3" placeholder="Observações do animal"></textarea>
+                </label>
+
+        </div>
+
+        <div class="modal-acoes">
+
+            <button
+                type="button"
+                class="cancelar"
+                onclick="fecharModal('modalCoelho')">
+
+                Cancelar
+
+            </button>
+
+            <button
+                type="button"
+                class="btn-principal"
+                id="btnSalvarCoelho"
+                onclick="salvarCoelho()">
+
+                Cadastrar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/coelhos.js"></script>
     <script src="js/menu.js"></script>
 
 </body>

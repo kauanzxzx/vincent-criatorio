@@ -61,6 +61,17 @@ function carregarNinhadas(){
 
 }
 
+function abrirCadastroVenda(){
+
+    limparFormulario();
+
+    document.getElementById("dataVenda").value =
+    hojeLocal();
+
+    abrirModal("modalVenda");
+
+}
+
 async function salvarVenda(){
 
     const ninhadaId =
@@ -134,6 +145,8 @@ async function salvarVenda(){
 
 };
 
+    definirCarregando("btnSalvarVenda", true);
+
     try{
 
         await fetch(
@@ -149,6 +162,10 @@ async function salvarVenda(){
             }
         );
 
+        definirCarregando("btnSalvarVenda", false);
+
+        fecharModal("modalVenda");
+
         limparFormulario();
 
         await carregarDados();
@@ -160,6 +177,8 @@ async function salvarVenda(){
     }catch(erro){
 
         console.error(erro);
+
+        definirCarregando("btnSalvarVenda", false);
 
         alert(
             "Erro ao registrar venda."

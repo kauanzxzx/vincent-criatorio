@@ -7,45 +7,69 @@
 
 <title>Financeiro</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/financeiro.css">
 
 <link rel="icon" href="/favicon.ico">
-
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
 
 <body>
 
     <button
-class="menu-mobile"
-id="btnMenu"
-onclick="abrirMenu()">
+    class="menu-mobile"
+    id="btnMenu"
+    onclick="abrirMenu()">
 
-    ☰
+    <i class="bi bi-list"></i>
 
 </button>
 
-<div class="sidebar">
+<nav class="sidebar">
 
-    <h2>Vincent Criatório</h2>
+    <h2>
+        <img src="favicon.ico" alt="">
+        <span>Vincent Criatório<small>Gestão de Cunicultura</small></span>
+    </h2>
 
     <ul>
-
-        <li><a href="index.html">Dashboard</a></li>
-        <li><a href="coelhos.html">Coelhos</a></li>
-        <li><a href="vendas.html">Vendas</a></li>
-        <li><a href="financeiro.html">Financeiro</a></li>
-
+        <li><a href="index.html"><i class="bi bi-grid-1x2"></i>Dashboard</a></li>
+        <li><a href="coelhos.html"><i class="bi bi-collection"></i>Coelhos</a></li>
+        <li><a href="cruzamentos.html"><i class="bi bi-intersect"></i>Cruzamentos</a></li>
+        <li><a href="ninhadas.html"><i class="bi bi-house-heart"></i>Ninhadas</a></li>
+        <li><a href="pesagens.html"><i class="bi bi-speedometer2"></i>Pesagens</a></li>
+        <li><a href="agenda-sanitaria.html"><i class="bi bi-capsule"></i>Agenda Sanitária</a></li>
+        <li><a href="alertas.html"><i class="bi bi-bell"></i>Alertas</a></li>
+        <li><a href="vendas.html"><i class="bi bi-bag-check"></i>Vendas</a></li>
+        <li><a href="financeiro.html"><i class="bi bi-wallet2"></i>Financeiro</a></li>
     </ul>
 
-</div>
+</nav>
 
 <div class="content">
 
-    <h1>Controle Financeiro</h1>
+    <div class="cabecalho-pagina">
+
+        <h1>Controle Financeiro</h1>
+
+        <button
+            type="button"
+            class="btn-principal"
+            onclick="abrirLancamento()">
+
+            <i class="bi bi-plus-lg"></i>
+            Novo Lançamento
+
+        </button>
+
+    </div>
 
     <div class="cards-financeiro">
 
@@ -75,50 +99,8 @@ onclick="abrirMenu()">
 
     </div>
 
-    <div class="formulario">
-
-        <input type="date" id="data">
-
-        <select id="tipo">
-
-            <option value="Entrada">
-                Entrada
-            </option>
-
-            <option value="Saida">
-                Saída
-            </option>
-
-        </select>
-
-        <select id="categoria" placeholder="Categoria">
-            <option value="">Categoria</option>
-            <option>Venda de Coelho</option>
-            <option>Aquisição de Coelho</option>
-            <option>Alimentação</option>
-            <option>Material</option>
-            <option>Derivados</option>
-        </select>
-
-        <input
-        type="text"
-        id="observacao"
-        placeholder="Observação">
-
-        <input
-        type="number"
-        step="0.01"
-        id="valor"
-        placeholder="Valor">
-
-        <button onclick="adicionarLancamento()">
-            Salvar
-        </button>
-
-    </div>
-
     <div class="tabela-container">
-    <table>
+    <table class="tabela-compacta">
 
         <thead>
 
@@ -140,6 +122,97 @@ onclick="abrirMenu()">
         </tbody>
 
     </table></div>
+
+</div>
+
+<div
+    id="modalLancamento"
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="titulo-modalLancamento">
+
+    <div class="modal-content modal-form">
+
+        <div class="modal-topo">
+
+            <h2 id="titulo-modalLancamento">Novo Lançamento</h2>
+
+            <button
+                type="button"
+                class="fechar-modal"
+                aria-label="Fechar"
+                onclick="fecharModal('modalLancamento')">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+        <div class="formulario">
+
+                <label class="campo">
+                    <span>Tipo *</span>
+                    <select id="tipo">
+                        <option value="Entrada">Entrada</option>
+                        <option value="Saida">Saída</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Data *</span>
+                    <input type="date" id="data">
+                </label>
+
+                <label class="campo">
+                    <span>Categoria</span>
+                    <select id="categoria">
+                        <option value="">Selecione</option>
+                        <option>Venda de Coelho</option>
+                        <option>Aquisição de Coelho</option>
+                        <option>Alimentação</option>
+                        <option>Material</option>
+                        <option>Derivados</option>
+                    </select>
+                </label>
+
+                <label class="campo">
+                    <span>Valor (R$) *</span>
+                    <input type="number" step="0.01" min="0" inputmode="decimal" id="valor" placeholder="0,00">
+                </label>
+
+                <label class="campo campo-cheio">
+                    <span>Observação</span>
+                    <input type="text" id="observacao" placeholder="Ex.: Ração 25kg">
+                </label>
+
+        </div>
+
+        <div class="modal-acoes">
+
+            <button
+                type="button"
+                class="cancelar"
+                onclick="fecharModal('modalLancamento')">
+
+                Cancelar
+
+            </button>
+
+            <button
+                type="button"
+                class="btn-principal"
+                id="btnSalvarLancamento"
+                onclick="adicionarLancamento()">
+
+                Salvar
+
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -228,6 +228,20 @@ function carregarSelects(){
 }
 
 // =========================
+// POP-UP CADASTRO
+// =========================
+
+function abrirCadastroCruzamento(){
+
+    document.getElementById("matriz").value = "";
+    document.getElementById("reprodutor").value = "";
+    document.getElementById("dataCruzamento").value = hojeLocal();
+
+    abrirModal("modalCruzamento");
+
+}
+
+// =========================
 // SALVAR CRUZAMENTO
 // =========================
 
@@ -306,6 +320,8 @@ async function salvarCruzamento(){
 
     };
 
+    definirCarregando("btnSalvarCruzamento", true);
+
     try{
 
         await fetch(
@@ -325,11 +341,17 @@ async function salvarCruzamento(){
         document.getElementById("reprodutor").value = "";
         document.getElementById("dataCruzamento").value = "";
 
+        definirCarregando("btnSalvarCruzamento", false);
+
+        fecharModal("modalCruzamento");
+
         carregarDados();
 
     }catch(erro){
 
         console.error(erro);
+
+        definirCarregando("btnSalvarCruzamento", false);
 
         alert(
             "Erro ao salvar cruzamento."
