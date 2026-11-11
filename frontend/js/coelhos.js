@@ -724,12 +724,18 @@ function limparFormulario(){
     idEdicao = null;
 }
 
-function verHistorico(id){
+async function verHistorico(id){
 
-    const pesagens =
-    JSON.parse(
-        localStorage.getItem("pesagens")
-    ) || [];
+    let pesagens = [];
+
+    try{
+        const resposta =
+        await fetch(`${API}/pesagens`);
+        pesagens =
+        await resposta.json();
+    }catch(erro){
+        console.error(erro);
+    }
 
     const coelho =
     coelhos.find(
@@ -738,7 +744,7 @@ function verHistorico(id){
 
     const historico =
     pesagens.filter(
-        p => p.id === id
+        p => String(p.coelho_id) === String(id)
     );
 
     document.getElementById("tituloHistorico").innerHTML =
@@ -759,9 +765,9 @@ function verHistorico(id){
 
             <div class="historico-item">
 
-                ${new Date(p.data).toLocaleDateString("pt-BR")}
+                ${String(p.data).split("T")[0].split("-").reverse().join("/")}
 
-                → ${p.peso.toFixed(3)} kg
+                → ${Number(p.peso).toFixed(3)} kg
 
             </div>
 

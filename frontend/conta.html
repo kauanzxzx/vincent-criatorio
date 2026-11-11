@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Conta e dados</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="icon" href="/favicon.ico">
+
+<style>
+.conta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.conta-grid .painel p{color:var(--texto-suave);line-height:1.55;font-size:14px;margin:0 0 14px}
+.conta-linha{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.conta-uso{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+.conta-uso div{background:var(--vidro-fraco);border:1px solid var(--vidro-linha);border-radius:var(--raio-md);padding:12px 14px}
+.conta-uso small{color:var(--texto-suave);font-size:12px;display:block}
+.conta-uso strong{font-size:20px;display:block;margin:2px 0 6px;color:var(--azul-principal)}
+.conta-barra{height:7px;border-radius:99px;background:var(--vidro-linha);overflow:hidden}
+.conta-barra i{display:block;height:100%;border-radius:99px;background:var(--gradiente-marca)}
+.conta-totais{list-style:none;padding:0;margin:0 0 14px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;font-size:14px}
+.conta-totais li{display:flex;justify-content:space-between;border-bottom:1px solid var(--vidro-linha);padding:5px 0}
+.conta-msg{font-size:13px;color:var(--texto-suave);margin-top:12px;min-height:18px;white-space:pre-line}
+.conta-msg.ok{color:var(--verde)}.conta-msg.erro{color:var(--vermelho)}
+@media(max-width:480px){.conta-uso,.conta-totais{grid-template-columns:1fr}}
+</style>
+
+</head>
+
+<body>
+
+<button
+class="menu-mobile"
+id="btnMenu"
+onclick="abrirMenu()">
+<i class="bi bi-list"></i>
+</button>
+
+<nav class="sidebar">
+
+    <h2>
+        <img src="favicon.ico" alt="">
+        <span>Vincent Criatório<small>Gestão de Cunicultura</small></span>
+    </h2>
+
+    <ul>
+        <li><a href="index.html"><i class="bi bi-grid-1x2"></i>Dashboard</a></li>
+        <li><a href="coelhos.html"><i class="bi bi-collection"></i>Coelhos</a></li>
+        <li><a href="cruzamentos.html"><i class="bi bi-intersect"></i>Cruzamentos</a></li>
+        <li><a href="ninhadas.html"><i class="bi bi-house-heart"></i>Ninhadas</a></li>
+        <li><a href="pesagens.html"><i class="bi bi-speedometer2"></i>Pesagens</a></li>
+        <li><a href="alertas.html"><i class="bi bi-bell"></i>Alertas</a></li>
+        <li><a href="vendas.html"><i class="bi bi-bag-check"></i>Vendas</a></li>
+        <li><a href="financeiro.html"><i class="bi bi-wallet2"></i>Financeiro</a></li>
+        <li><a href="conta.html"><i class="bi bi-person-gear"></i>Conta e dados</a></li>
+    </ul>
+
+</nav>
+
+<div class="content">
+
+    <div class="cabecalho-pagina">
+        <h1>Conta e dados</h1>
+    </div>
+
+    <div class="conta-grid">
+
+        <div class="painel">
+            <h2><i class="bi bi-person-circle"></i>Conta</h2>
+            <p>Conectado como <strong id="contaEmail">—</strong>.<br>
+            Os dados ficam salvos online e aparecem em qualquer aparelho em que você entrar com esta conta.</p>
+            <div class="conta-linha">
+                <button class="cancelar" onclick="Dados.sair()">Sair deste aparelho</button>
+            </div>
+        </div>
+
+        <div class="painel">
+            <h2><i class="bi bi-cloud-check"></i>Sincronização</h2>
+            <p id="contaStatus">—</p>
+            <div class="conta-uso">
+                <div>
+                    <small>Leituras hoje (neste aparelho)</small>
+                    <strong id="usoR">0</strong>
+                    <div class="conta-barra"><i id="barraR" style="width:1%"></i></div>
+                    <small>limite grátis: 50.000 por dia</small>
+                </div>
+                <div>
+                    <small>Gravações hoje (neste aparelho)</small>
+                    <strong id="usoW">0</strong>
+                    <div class="conta-barra"><i id="barraW" style="width:1%"></i></div>
+                    <small>limite grátis: 20.000 por dia</small>
+                </div>
+            </div>
+            <p style="font-size:12.5px">Os limites zeram todo dia de madrugada. Se um dia fossem atingidos, nada é apagado — a sincronização só pausa até zerar, e o sistema continua funcionando com os dados do aparelho.</p>
+        </div>
+
+        <div class="painel">
+            <h2><i class="bi bi-database"></i>Registros</h2>
+            <ul class="conta-totais" id="contaTotais"></ul>
+        </div>
+
+        <div class="painel">
+            <h2><i class="bi bi-box-arrow-in-down"></i>Trazer dados do sistema antigo</h2>
+            <p>Busca tudo que está no servidor antigo (Render + MySQL) e salva no Firebase. Faça isso <strong>uma vez só</strong>, logo depois de começar a usar a versão nova. Os dados atuais deste sistema serão substituídos pelos do servidor antigo.</p>
+            <p id="contaMigrado" style="font-size:13px"></p>
+            <div class="conta-linha">
+                <button class="salvar" id="btnMigrar" onclick="migrarAntigo()">Importar do sistema antigo</button>
+            </div>
+            <div class="conta-msg" id="msgMigrar"></div>
+        </div>
+
+        <div class="painel">
+            <h2><i class="bi bi-shield-check"></i>Backup</h2>
+            <p>Os dados já ficam salvos online, mas é bom guardar uma cópia extra de vez em quando (Google Drive ou pendrive). Importar um backup <strong>substitui todos os dados</strong>, em todos os aparelhos.</p>
+            <p id="contaBackup" style="font-size:13px"></p>
+            <div class="conta-linha">
+                <button class="salvar" onclick="baixarBackup()">Baixar backup</button>
+                <button class="historico" onclick="document.getElementById('arqBackup').click()">Importar backup</button>
+                <input type="file" id="arqBackup" accept=".json,application/json" hidden onchange="importarBackup(this)">
+            </div>
+            <div class="conta-msg" id="msgBackup"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/dados.js"></script>
+<script src="js/conta.js"></script>
+<script src="js/menu.js"></script>
+
+</body>
+</html>
